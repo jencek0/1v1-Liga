@@ -23,7 +23,7 @@
       <p><strong>18. října:</strong><br> První 3 zápasy odehrány, 2 výhry si připsal tým FC Barcelona,<br> 3 body si odnáší také AC Sparta Praha.</p>
       <p><strong>10. října:</strong> Hráčská legenda pod přezdívkou "David Neres", Šašek, ze zdravotních důvodů odstoupil ze všech soutěží a byl nahrazen.</p>
 
-      <img src="images/1v1logo – upraveno.jpg" alt="Logo " style="width:70%; border-radius:1px; margin-top:10px;">
+      <img src="1v1logo – upraveno.jpg" alt="Logo " style="width:70%; border-radius:1px; margin-top:10px;">
     `;
     
   </script>
@@ -40,7 +40,7 @@
       </ul>
       <p><strong>Počet kol odehraných: 1</strong></p>
       <p><em>Další zápas: 15. listopadu –<br> ŠK Slovan Bratislava vs. 1.FC Slovácko</em></p>
-      <img src="images/svaz1v1logofinal.png" alt="Logo svazu" style="width:70%; border-radius:1px; margin-top:10px;">
+      <img src="svaz1v1logofinal.png" alt="Logo svazu" style="width:70%; border-radius:1px; margin-top:10px;">
       
     `;
   </script>
@@ -130,9 +130,54 @@
         width: 90%;
       }
     }
+    
+    /* CSS MUZEUM */
+    .museum {
+  margin-top: 40px;
+  background-color: #f8f8f8;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.museum h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 35px;
+  font-size: 35px;
+}
+
+.museum-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  justify-items: center;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  padding: 15px;
+  width: 320px;
+  height: 320px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
   </style>
 </head>
 
+<!-- TABULKA -->
 <body>
   <div class="container">
     <aside class="side-panel left" id="leftPanel"></aside>
@@ -157,6 +202,57 @@
 
     <aside class="side-panel right" id="rightPanel"></aside>
   </div>
+
+  <!-- HISTORIE LIGY -->
+<section class="museum">
+  <h1>🏛️ Historie ligy</h1>
+  <div class="museum-grid">
+    <div class="card">
+      <h3>Šašek</h3>
+      <p>Legenda klubu Polští špačci – 1 sezóna, 23 gólů, hráč 3 dne 1. sezóny 1v1 ligy. Do druhé sezóny již nenastoupil poté co ukončil svou kariéru.</p>
+      <img src="images/sasek.jpg" alt="Legenda šašek" class="card-img">
+    </div>
+    <div class="card">
+      <h3>Vítěz 1. sezóny 1v1 ligy</h3>
+      <p>V první sezóně dotáhl Jencek tým FC Sudí Podplacen k titulu, za celou sezónu získal 22 bodů.</p>
+      <img src="images/jencek.jpg" alt="Vítěz 1. ligy" class="card-img">
+    </div>
+    <div class="card">
+      <h3>Trofej ligy</h3>
+      <p>Putovní pohár udělovaný od roku 2025.</p>
+      <img src="images/pohar.jpg" alt="Trofej" class="card-img">
+    </div>
+    <div class="card">
+      <h3>SuperCup</h3>
+      <p>Kromě 1v1 ligy se v rámci svazu hraje ještě jedna soutěž na klubové úrovni, a to SuperCup. Jeho první ročník ovládl tým AC Sparta Praha poté co naprosto dominoval po dobu celé soutěže.</p>
+      <img src="images/supercup.jpg" alt="Trofej" class="card-img">
+    </div>
+    <div class="card">
+      <h3>Historicky 1. zápas</h3>
+      <p>1. zápas v historii celého svazu se odehrál již 22. června 2025, jednalo se o derby mezi týmy FC Sudí Podplacen a FC Gurt Yo. Zápas skončil výhrou domácího celku za výsledku 10:6.</p>
+      <img src="images/1zapas.jpg" alt="Trofej" class="card-img">
+    </div> 
+  </div>
+
+<div class="museum-grid">
+    <div class="card">
+      <h3>Jan Novák</h3>
+      <p>Legenda klubu – 120 gólů, 3 tituly.</p>
+      <img src="images/legend1.jpg" alt="Legenda" class="card-img">
+    </div>
+    <div class="card">
+      <h3>Vítěz sezóny 2022</h3>
+      <p>Tým A po napínavém finále 2:1.</p>
+      <img src="images/winner2022.jpg" alt="Vítěz 2022" class="card-img">
+    </div>
+    <div class="card">
+      <h3>Trofej ligy</h3>
+      <p>Putovní pohár udělovaný od roku 2000.</p>
+      <img src="images/trophy.jpg" alt="Trofej" class="card-img">
+    </div>
+  </div>
+
+</section>
 
   <script>
     // 🧮 Skript pro výpočet tabulky
