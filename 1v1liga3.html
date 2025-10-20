@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fotbalová tabulka</title>
+
+  <!-- 🔝🔧 SEKCE 1: TABULKA (týmy, góly, body) -->
+  <script>
+    const teamsData = [
+      { team: "1.FC Slovácko", matchesplayed: 1, goalsFor: 1, goalsAgainst: 6, points: 0 },
+      { team: "FC Barcelona", matchesplayed: 2, goalsFor: 11, goalsAgainst: 2, points: 6 },
+      { team: "ŠK Slovan Bratislava", matchesplayed: 1, goalsFor: 1, goalsAgainst: 6, points: 0 },
+      { team: "AC Sparta Praha", matchesplayed: 1, goalsFor: 6, goalsAgainst: 1, points: 3 },
+      { team: "FK Hodonín", matchesplayed: 1, goalsFor: 1, goalsAgainst: 5, points: 0 }
+    ];
+  </script>
+
+  <!-- 🔧 SEKCE 2: OBSAH LEVÉHO PANELU -->
+  <script>
+    const leftPanelContent = `
+      <h2>📰 Novinky</h2>
+      <p><strong>18. října:</strong><br> První 3 zápasy odehrány, 2 výhry si připsal tým FC Barcelona,<br> 3 body si odnáší také AC Sparta Praha.</p>
+      <p><strong>10. října:</strong> Hráčská legenda pod přezdívkou "David Neres", Šašek, ze zdravotních důvodů odstoupil ze všech soutěží a byl nahrazen.</p>
+
+      <img src="1v1logo – upraveno.jpg" alt="Logo " style="width:70%; border-radius:1px; margin-top:10px;">
+    `;
+    
+  </script>
+
+  <!-- 🔧 SEKCE 3: OBSAH PRAVÉHO PANELU -->
+  <script>
+    const rightPanelContent = `
+      <h2>ℹ️ Informace</h2>
+      <p><strong>Soutěže pod správou svazu:</strong></p>
+      <ul>
+        <li>1v1 Liga Hodonín</li>
+        <li>Liga Národů</li>
+        <li>Super Cup</li>
+      </ul>
+      <p><strong>Počet kol odehraných: 1</strong></p>
+      <p><em>Další zápas: 15. listopadu –<br> ŠK Slovan Bratislava vs. 1.FC Slovácko</em></p>
+      <img src="svaz1v1logofinal.png" alt="Logo svazu" style="width:70%; border-radius:1px; margin-top:10px;">
+      
+    `;
+  </script>
+
+  <!-- 🔧 KONEC ČÁSTÍ PRO ÚPRAVU -->
+
+  <style>
+    /* 🎨 --- STYL STRÁNKY --- */
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #e2ebf0, #cfd9df);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 40px auto;
+      gap: 20px;
+    }
+
+    .side-panel {
+      width: 20%;
+      background-color: #ffffff;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* rozdělí obsah nahoře a dole */
+      align-items: center; /* vycentruje obsah vodorovně */
+      text-align: center;
+}
+
+    main {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      border: #0f4775 solid 3px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #0078d7;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #e6f0ff;
+    }
+
+    tbody tr:nth-child(1) { background-color: #fff8dc; } /* zlatá */
+    tbody tr:nth-child(2) { background-color: #f0f0f0; } /* stříbrná */
+    tbody tr:nth-child(3) { background-color: #ffe5b4; } /* bronzová */
+
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .side-panel {
+        width: 90%;
+      }
+      main {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <aside class="side-panel left" id="leftPanel"></aside>
+
+    <main>
+      <h1>1v1 Liga - Tabulka</h1>
+      <table id="leagueTable">
+        <thead>
+          <tr>
+            <th>Pořadí</th>
+            <th>Tým</th>
+            <th>Odehrané zápasy</th>
+            <th>Vstřelené góly</th>
+            <th>Obdržené góly</th>
+            <th>Rozdíl</th>
+            <th>Body</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </main>
+
+    <aside class="side-panel right" id="rightPanel"></aside>
+  </div>
+
+  <script>
+    // 🧮 Skript pro výpočet tabulky
+    function renderTable() {
+      const tbody = document.querySelector("#leagueTable tbody");
+      tbody.innerHTML = "";
+
+      teamsData.forEach(team => {
+        team.diff = team.goalsFor - team.goalsAgainst;
+      });
+
+      teamsData.sort((a, b) => b.points - a.points || b.diff - a.diff);
+
+      teamsData.forEach((team, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${team.team}</td>
+          <td>${team.matchesplayed}</td>
+          <td>${team.goalsFor}</td>
+          <td>${team.goalsAgainst}</td>
+          <td>${team.diff}</td>
+          <td>${team.points}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // 📰 Naplnění postranních panelů
+    document.querySelector("#leftPanel").innerHTML = leftPanelContent;
+    document.querySelector("#rightPanel").innerHTML = rightPanelContent;
+
+    renderTable();
+  </script>
+</body>
+</html>
