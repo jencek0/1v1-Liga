@@ -121,7 +121,7 @@
     tbody tr:nth-child(1):hover { background-color: #ece6cd; } 
     tbody tr:nth-child(2):hover { background-color: #cfcfcf; } 
     tbody tr:nth-child(3):hover { background-color: #dac39a; }
-    
+
     @media (max-width: 900px) {
       .container {
         flex-direction: column;
@@ -183,6 +183,64 @@
   border-radius: 8px;
   margin-bottom: 10px;
 }
+
+/* 📱 RESPONSIVE DESIGN PRO MOBIL */
+@media (max-width: 900px) {
+  /* Změní rozložení na svislé (panely nad a pod tabulkou) */
+  .container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+  }
+
+  .side-panel {
+    width: 95%;
+    order: 1; /* levý panel nahoře */
+  }
+
+  main {
+    width: 95%;
+    order: 2;
+    overflow-x: auto; /* umožní posouvat tabulku, když je moc široká */
+  }
+
+  .right {
+    order: 3; /* pravý panel dole */
+  }
+
+  /* Tabulka se nebude rozbíjet, ale bude se posouvat do strany */
+  table {
+    font-size: 14px;
+    min-width: 600px; /* nechá tabulku čitelnou */
+    border: 2px solid #0078d7;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+}
+
+/* 📱 Ještě menší obrazovky (do 600px) */
+@media (max-width: 600px) {
+  .museum-grid {
+    grid-template-columns: 1fr; /* každá karta na samostatném řádku */
+  }
+
+  .card {
+    width: 90%;
+    height: auto;
+  }
+
+  .side-panel {
+    font-size: 14px;
+  }
+}
+
   </style>
 </head>
 
