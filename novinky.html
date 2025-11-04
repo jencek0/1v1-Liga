@@ -48,6 +48,18 @@
       main{ margin:20px; }
       .news-entry{ padding:15px; }
     }
+
+    /* ===== UDRŽÍ FOOTER DOLE ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1; /* roztáhne hlavní obsah, aby footer byl dole */
+}
   </style>
 </head>
 <body>
