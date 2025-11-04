@@ -32,17 +32,19 @@
   <script>
     const rightPanelContent = `
       <h2>ℹ️ Informace</h2>
+      <p><strong>Počet kol odehraných: 1</strong></p>
+      <p><em>Další zápas: 15. listopadu –<br> ŠK Slovan Bratislava vs. 1.FC Slovácko</em></p>
       <p><strong>Soutěže pod správou svazu:</strong></p>
       <ul>
         <li>1v1 Liga Hodonín</li>
         <li>Liga Národů</li>
         <li>Super Cup</li>
       </ul>
-      <p><strong>Počet kol odehraných: 1</strong></p>
-      <p><em>Další zápas: 15. listopadu –<br> ŠK Slovan Bratislava vs. 1.FC Slovácko</em></p>
       <img src="images/svaz1v1logofinal.png" alt="Logo svazu" style="width:70%; border-radius:1px; margin-top:10px;">
       
     `;
+
+    
   </script>
 
   <!-- 🔧 KONEC ČÁSTÍ PRO ÚPRAVU -->
@@ -241,6 +243,123 @@
   }
 }
 
+/* --- BLOK ZÁPASY - finální styl --- */
+.h1zapasy {
+  font-size: 50px;
+  margin-top: 1px;
+}
+#zapasy {
+  background: linear-gradient(135deg, #7192b4, #09233d);
+  text-align: center;
+  padding: 50px 0;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.zapasy-section h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.zapasy-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.zapasy-scroll {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px 0;
+}
+
+.zapasy-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.zapasy-scroll img {
+  height: 220px;
+  margin-left: -60px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: brightness(0.85);
+}
+
+.zapasy-scroll img:first-child {
+  margin-left: 0;
+}
+
+.zapasy-scroll img:hover {
+  transform: scale(1.08);
+  filter: brightness(1);
+  z-index: 2;
+}
+
+.zapasy-card {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 140px;
+  transition: transform 0.3s ease, z-index 0s;
+  border-radius: 10px;
+  position: relative;
+}
+
+/* Šipky */
+.arrow {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 3;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background 0.3s;
+}
+
+.arrow:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.arrow.left {
+  left: 10px;
+}
+
+.arrow.right {
+  right: 10px;
+}
+
+/* Fade efekty */
+.fade {
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.right-fade {
+  right: 0;
+  background: linear-gradient(to left, rgb(25, 54, 83), rgba(27, 88, 150, 0));
+  border-radius: 20px;
+}
+.top-right-fade {
+  right: 0;
+  background: linear-gradient(to left, rgb(42, 69, 97), rgba(27, 88, 150, 0));
+  border-radius: 20px;
+}
   </style>
 </head>
 
@@ -270,13 +389,70 @@
     <aside class="side-panel right" id="rightPanel"></aside>
   </div>
 
+<!-- BLOK ZÁPASY -->
+<section id="zapasy">
+  <h1 class="h1zapasy">Zápasy</h1>
+
+  <!-- Rozpis utkání -->
+  <div class="zapasy-section">
+    <h3>Rozpis utkání</h3>
+    <div class="zapasy-wrapper">
+      <button class="arrow left">❮</button>
+      <div class="zapasy-scroll">
+        <img src="images/matchday1.png" alt="Rozpis 1">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/rozpis3.jpg" alt="Rozpis 3">
+        <img src="images/rozpis4.jpg" alt="Rozpis 4">
+      </div>
+      <button class="arrow right">❯</button>
+      <div class="fade top-right-fade"></div>
+    </div>
+  </div>
+
+  <!-- Výsledky utkání -->
+  <div class="zapasy-section">
+    <h3>Výsledky</h3>
+    <div class="zapasy-wrapper">
+      <button class="arrow left">❮</button>
+      <div class="zapasy-scroll">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
+        <img src="images/vysledek2.jpg" alt="Výsledek 2">
+        <img src="images/vysledek3.jpg" alt="Výsledek 3">
+        <img src="images/vysledek4.jpg" alt="Výsledek 4">
+      </div>
+      <button class="arrow right">❯</button>
+      <div class="fade right-fade"></div>
+    </div>
+  </div>
+</section>
+
+
   <!-- HISTORIE LIGY -->
 <section class="museum">
   <h1>🏛️ Historie ligy</h1>
   <div class="museum-grid">
     <div class="card">
       <h3>Šašek</h3>
-      <p>Legenda klubu Polští špačci – 1 sezóna, 23 gólů, hráč 3 dne 1. sezóny 1v1 ligy. Do druhé sezóny již nenastoupil poté co ukončil svou kariéru.</p>
+      <p>Legenda klubu Polští špačci – 1 sezóna, 23 gólů, hráč 3. dne 1. sezóny 1v1 ligy. Do druhé sezóny již nenastoupil poté co ukončil svou kariéru.</p>
       <img src="images/sasek.jpg" alt="Legenda šašek" class="card-img">
     </div>
     <div class="card">
@@ -353,6 +529,23 @@
     document.querySelector("#rightPanel").innerHTML = rightPanelContent;
 
     renderTable();
+    
+    // 🎞️ Posouvání obrázků v sekci Zápasy
+document.querySelectorAll(".zapasy-section").forEach(section => {
+  const scrollContainer = section.querySelector(".zapasy-scroll");
+  const leftBtn = section.querySelector(".arrow.left");
+  const rightBtn = section.querySelector(".arrow.right");
+
+  leftBtn.addEventListener("click", () => {
+    scrollContainer.scrollBy({ left: -240, behavior: "smooth" });
+  });
+
+  rightBtn.addEventListener("click", () => {
+    scrollContainer.scrollBy({ left: 240, behavior: "smooth" });
+  });
+});
+
+
   </script>
 </body>
 </html>
