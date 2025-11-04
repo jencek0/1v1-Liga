@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Starší novinky – 1v1 Liga</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #e2ebf0, #cfd9df);
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f4775, #183b5f);
+      color: white;
+      text-align: center;
+      padding: 30px 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    header h1 { margin: 0; font-size: 2.2rem; }
+    header a { color: #bcd4f5; text-decoration: none; font-weight: 600; display:inline-block; margin-top:10px; }
+
+    main { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+
+    .news-entry {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .news-entry:hover { transform: translateY(-3px); box-shadow: 0 6px 14px rgba(0,0,0,0.15); }
+
+    .news-date { font-weight: bold; color: #0f4775; margin-bottom: 5px; }
+    .news-title { font-size: 1.3rem; margin-bottom: 8px; color: #183b5f; }
+    .news-text { line-height: 1.6; }
+
+    footer {
+      text-align: center; padding: 25px; background: #f1f4f8; color: #555; font-size: 0.9rem;
+      border-top: 2px solid #d6dde4;
+    }
+
+    @media (max-width:700px){
+      main{ margin:20px; }
+      .news-entry{ padding:15px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🗞️ Starší novinky</h1>
+    <a href="index.html">← Zpět na hlavní stránku</a>
+  </header>
+
+  <main>
+    <div class="news-entry">
+      <div class="news-date">3. října 2025</div>
+      <div class="news-title">Šok na startu ligy!</div>
+      <div class="news-text">
+        Tým FC Hodonín podlehl Barceloně vysoko 1:6. Kapitán domácích přiznal, že tým ještě není sehraný, ale slibuje zlepšení do dalších kol.
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">28. září 2025</div>
+      <div class="news-title">Nové logo svazu 1v1</div>
+      <div class="news-text">
+        Svaz představil nové moderní logo, které bude jednotně používáno ve všech soutěžích včetně SuperCupu a Ligy národů.
+      </div>
+    </div>
+
+    <div class="news-entry">
+      <div class="news-date">14. září 2025</div>
+      <div class="news-title">Rozlosování sezóny potvrzeno</div>
+      <div class="news-text">
+        Bylo potvrzeno rozlosování všech zápasů nové sezóny 1v1 ligy. První duel mezi Slováckem a Spartou se odehraje už příští týden.
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 1v1 Liga Hodonín – Všechna práva vyhrazena
+  </footer>
+</body>
+</html>
