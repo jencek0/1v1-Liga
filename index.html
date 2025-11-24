@@ -91,6 +91,11 @@
       padding: 20px;
     }
 
+    footer {
+      text-align: center; padding: 25px; background: #010d1d; color: #979797; font-size: 0.9rem;
+      border-top: 2px solid #0d1824;
+    }
+
     h1 {
       text-align: center;
       margin-bottom: 20px;
@@ -142,54 +147,299 @@
       }
     }
     
-    /* CSS MUZEUM */
-    .museum {
-  margin-top: -10px;
-  background-color: #f8f8f8;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+/* ===== Historie / Muzeum (S3) ===== */
+.celemuzeum {
+  margin-bottom: 0px;
 }
 
-.museum h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 35px;
-  font-size: 35px;
+
+
+.history-museum {
+  background: linear-gradient(180deg, #182e4b, #07101c);
+  color: #e9f2f8;
+  padding: 40px 18px;
+  
+}
+.hm-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+/* header + tabs */
+.hm-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.hm-header h1 { margin:0; font-size:28px; color:#fff; }
+.history-tabs { display:flex; gap:8px; }
+.history-tabs button {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #e6f3ff;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  transition: transform .18s, background .18s;
+}
+.history-tabs button[aria-selected="true"] {
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 6px 20px rgba(3,27,44,0.45);
+  transform: translateY(-3px);
 }
 
-.museum-grid {
+/* layout content */
+.hm-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  justify-items: center;
+  grid-template-columns: minmax(0,1fr) 420px; /* pevná pravá šířka, levá se zlomí správně */
+  gap: 22px;
+  align-items: start;
 }
 
-.card {
-  background-color: #fff;
+/* LEFT: timeline + records */
+.hm-left {
+  display:flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* timeline tabs content area */
+.season-panel {
+  background: rgba(255,255,255,0.05);
+  overflow: auto;
+  z-index: 1;
+  gap: 18px;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-height: 420px;
+  display: flex;
+  border-radius: 14px;
+  padding: 22px 26px;
+  box-shadow: 0 6px 25px rgba(2,18,32,0.45);
+  backdrop-filter: blur(6px);
+  margin: 0;
+  box-sizing: border-box
+  
+}
+
+.season-details-item h4{
+  margin-top: 14px;
+  text-align: start;
+  margin-bottom: 0px;
+}
+
+.season-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 710px;
+}
+
+.season-details-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* timeline area (tabs have timeline inside) */
+.timeline-wrap {
+  display:flex;
+  gap:12px;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding: 12px 6px;
+  scroll-snap-type: x mandatory;
+}
+.timeline-item {
+  min-width: 260px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  padding: 15px;
-  width: 320px;
-  height: 320px;
-  text-align: center;
-  transition: transform 0.2s ease;
+  padding: 14px;
+  scroll-snap-align: center;
+  transition: transform .28s, box-shadow .28s;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.timeline-item:hover { transform: translateY(-6px); box-shadow: 0 10px 30px rgba(2,18,32,0.6); }
+.timeline-year { font-weight:700; color:#dbefff; margin-bottom:6px; }
+.timeline-meta { font-size:14px; color: #cfe7ff; line-height:1.5; }
+
+/* records */
+.records-panel {
+  margin-top: 6px;
+  background: rgba(255,255,255,0.02);
+  padding: 14px;
+  border-radius: 12px;
+  border:1px solid rgba(255,255,255,0.03);
+  position: relative;
+  z-index: 2;
+}
+.records-panel h3 { margin-top:0; color:#d6eaff; }
+.records-panel ul { margin:10px 0 0 0; padding:0; list-style:none; }
+.records-panel li {
+  padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.03);
+  color:#cfe7ff;
 }
 
-.card:hover {
-  transform: scale(1.28);
+/* RIGHT: Hall of Fame + gallery */
+.hm-right { 
+  display:flex; 
+  flex-direction:column;
+  gap:18px;
+  width: 100%;
+ }
+.hof-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
+}
+.hof-card {
+  background: rgba(255,255,255,0.03);
+  border-radius:10px;
+  padding:8px;
+  cursor:pointer;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  border:1px solid rgba(255,255,255,0.03);
+  transition: transform .18s, box-shadow .18s;
+}
+.hof-card:hover { transform: translateY(-6px); box-shadow:0 8px 22px rgba(0,0,0,0.5); }
+.hof-card img { width:70px; height:70px; object-fit:cover; border-radius:8px; }
+
+/* legend slide panel */
+.legend-panel {
+  position: fixed;
+  right: -420px; /* hidden by default */
+  top: 60px;
+  width: 380px;
+  max-width: 92%;
+  height: calc(100% - 120px);
+  background: linear-gradient(180deg, rgba(1, 4, 12, 0.877),#080b1b, rgba(29, 38, 66, 0.925));
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 30px 60px rgba(1,12,25,0.6);
+  transition: right .34s cubic-bezier(.2,.9,.25,1);
+  z-index: 1200;
+  overflow:auto;
+  border:1px solid rgba(255,255,255,0.04);
+}
+.legend-panel.open { right: 28px; }
+.legend-close {
+  position:absolute; left:12px; top:10px; background:transparent; border:none; color:#dbefff; font-size:20px; cursor:pointer;
+}
+.legend-inner img { width:100%; border-radius:10px; margin-bottom:12px; object-fit:cover;height: 300px; }
+.legend-inner h3 { margin:0 0 8px; color:#fff; }
+.legend-inner p { color:#d0e7ff; line-height:1.5; }
+
+/* mini gallery */
+.mini-gallery { 
+  display:flex; 
+  gap:10px;
+  overflow-x:auto;
+  padding:8px 4px;
+  align-items: center;
+  max-height: 600px;
+  }
+.mini-gallery img { 
+  width:auto; 
+  height:100px; 
+  object-fit: scale-down;
+  border-radius:8px; 
+  cursor: pointer; 
+  transition: transform .12s, box-shadow .12s; 
+
+}
+.mini-gallery img:hover {
+  transform: scale(4) center;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);  }
+
+/* responsive */
+@media (max-width: 980px) {
+  .hm-content { grid-template-columns: 1fr; }
+  .hof-grid { grid-template-columns: repeat(3, 1fr); }
+  .legend-panel { right: -100%; width: 96%; left: 2%; top: 60px; }
+}
+@media (max-width: 640px) {
+  .hof-grid { grid-template-columns: repeat(2, 1fr); }
+  .mini-gallery img { width:80px; height:60px; }
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.card-img {
-  width: 60%;
-  border-radius: 8px;
-  margin-bottom: 10px;
+
+
+.season-panel {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  background: rgba(255,255,255,0.05);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 6px 24px rgba(2,18,32,0.45);
+  backdrop-filter: blur(8px);
 }
-.card-img-pohar {
-  width: 50%;
-  border-radius: 8px;
-  margin-bottom: 10px;
+
+.season-header h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 26px;
 }
+
+.season-summary {
+  color: #cfe7ff;
+  font-size: 14px;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.season-details {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+  gap: 16px;
+}
+
+.season-details-item {
+  background: rgba(255,255,255,0.07);
+  padding: 12px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.section-subtitle {
+  margin-top: 28px;
+  margin-bottom: 10px;
+  color: #fff;
+  font-size: 20px;
+}
+
+.records-list li {
+  color: #9fc9ff;
+  margin-bottom: 4px;
+}
+
+/* galerie */
+.gallery {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 14px;
+}
+
+
+
+
 
 /* 📱 RESPONSIVE DESIGN PRO MOBIL */
 @media (max-width: 900px) {
@@ -302,7 +552,7 @@
 }
 
 .zapasy-scroll img:hover {
-  transform: scale(1.08);
+  transform: scale(1.25);
   filter: brightness(1);
   z-index: 2;
 }
@@ -326,7 +576,7 @@
   height: 45px;
   font-size: 24px;
   cursor: pointer;
-  z-index: 3;
+  z-index: 9999;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -338,11 +588,17 @@
 }
 
 .arrow.left {
+  position: absolute;
   left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  z-index: 9999; /* ne 20, ne 90 → opravdu 9999 */
 }
 
 .arrow.right {
   right: 10px;
+  z-index: 9999;
 }
 
 /* Fade efekty */
@@ -365,6 +621,123 @@
   background: linear-gradient(to left, rgb(42, 69, 97), rgba(27, 88, 150, 0));
   border-radius: 20px;
 }
+
+/* MINI-GALLERY (3x4, scroll down, no arrows) */
+.mini-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-height: 400px;        /* ← dle tvé volby */
+  overflow-y: auto;         /* scroll dolů */
+  padding: 20px;  
+  padding-right: 50px;     /* aby scrollbar nepřekrýval obrázky */
+}
+
+.mini-gallery-grid img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform .25s ease;
+  
+}
+
+.mini-gallery-grid img:hover {
+  transform: scale(1.5);
+}
+
+/* === LIGHTBOX === */
+#lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.88);
+  display: none;
+  z-index: 999999;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 10px;
+}
+
+.lightbox-caption {
+  margin-top: 12px;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  max-width: 90vw;
+  opacity: 60%;
+}
+
+<!--Plan Zapasu-->
+.plan-zapasu {
+    width: 100%;
+    padding: 0px 0;
+    background: #111;
+    color: white;
+    text-align: center;
+    margin: 0px;
+}
+
+.plan-zapasu h2 {
+    font-size: 32px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.plan-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 15%;
+}
+
+.plan-container {
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    width: 80%;
+}
+
+.plan-item {
+    min-width: 250px;
+    background: #384257;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #828bb4;
+    transition: 0.3s;
+}
+
+.plan-item:hover {
+    transform: scale(1.05);
+}
+
+.plan-btn {
+    background: #444;
+    border: none;
+    color: white;
+    font-size: 30px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.plan-btn:hover {
+    background: #666;
+}
+
   </style>
 </head>
 
@@ -398,12 +771,64 @@
 <section id="zapasy">
   <h1 class="h1zapasy">Zápasy</h1>
 
-  <!-- Rozpis utkání -->
+  <section class="plan-zapasu">
+    <h2>Plán zápasů</h2>
+
+    <div class="plan-wrapper">
+        <button class="plan-btn left" onclick="movePlan(-1)">&#10094;</button>
+
+        <div class="plan-container" id="planContainer">
+            <div class="plan-item">
+                <h3>ŠK Slovan Bratislava vs. 1.FC Slovácko</h3>
+                <p>Datum neurčeno</p>
+            </div>
+
+            <div class="plan-item">
+                <h3>AC Sparta Praha vs. ŠK Slovan Bratislava</h3>
+                <p>Datum neurčeno</p>
+            </div>
+
+            <div class="plan-item">
+                <h3>1.FC Slovácko vs. FK Hodonín</h3>
+                <p>Datum neurčeno</p>
+            </div>
+
+            <div class="plan-item">
+                <h3>FC Barcelona vs. 1.FC Slovácko</h3>
+                <p>Datum neurčeno</p>
+            </div>
+
+            <div class="plan-item">
+                <h3>FK Hodonín vs. AC Sparta Praha</h3>
+                <p>Datum neurčeno</p>
+            </div>
+
+            <div class="plan-item">
+                <h3>ŠK Slovan Bratislava vs. FK Hodonín</h3>
+                <p>Datum neurčeno</p>
+            </div>
+
+            <div class="plan-item">
+                <h3>AC Sparta Praha vs. FC Barcelona</h3>
+                <p>Datum neurčeno</p>
+            </div>
+        </div>
+
+        <button class="plan-btn right" onclick="movePlan(1)">&#10095;</button>
+    </div>
+</section>
+
+  <!-- Grafika utkání -->
   <div class="zapasy-section">
-    <h3>Rozpis utkání</h3>
+    <h3>Grafika</h3>
     <div class="zapasy-wrapper">
       <button class="arrow left">❮</button>
       <div class="zapasy-scroll">
+        <img src="images/golsezony.png" alt="foto">
+        <img src="images/autista4.jpg" alt="foto">
+        <img src="images/hracsezony.png" alt="foto">
+        <img src="images/jencek3.jpg" alt="foto">
+        <img src="images/vysledky1.png" alt="Výsledek 1">
         <img src="images/matchday1.png" alt="Rozpis 1">
         <img src="images/rozpis1.png" alt="Rozpis 2">
         <img src="images/rozpis1.png" alt="Rozpis 2">
@@ -415,34 +840,6 @@
         <img src="images/rozpis1.png" alt="Rozpis 2">
         <img src="images/rozpis1.png" alt="Rozpis 2">
         <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis3.jpg" alt="Rozpis 3">
-        <img src="images/rozpis4.jpg" alt="Rozpis 4">
-      </div>
-      <button class="arrow right">❯</button>
-      <div class="fade top-right-fade"></div>
-    </div>
-  </div>
-
-  <!-- Výsledky utkání -->
-  <div class="zapasy-section">
-    <h3>Výsledky</h3>
-    <div class="zapasy-wrapper">
-      <button class="arrow left">❮</button>
-      <div class="zapasy-scroll">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/vysledek2.jpg" alt="Výsledek 2">
-        <img src="images/vysledek3.jpg" alt="Výsledek 3">
-        <img src="images/vysledek4.jpg" alt="Výsledek 4">
       </div>
       <button class="arrow right">❯</button>
       <div class="fade right-fade"></div>
@@ -450,58 +847,79 @@
   </div>
 </section>
 
+<div class="celemuzeum">
+<!-- ===== HISTORIE & MUZEUM (nová verze) ===== -->
+<section id="historyMuseum" class="history-museum">
+  <div class="hm-inner">
+    <header class="hm-header">
+      <h1>🏛️ Historie ligy & Muzeum</h1>
+      <nav class="history-tabs" role="tablist" aria-label="Tabs">
+        <!-- buttons budou naplněny JS z seasonsData -->
+      </nav>
+    </header>
 
-  <!-- HISTORIE LIGY -->
-<section class="museum">
-  <h1>🏛️ Historie ligy</h1>
-  <div class="museum-grid">
-    <div class="card">
-      <h3>Šašek</h3>
-      <p>Legenda klubu Polští špačci – 1 sezóna, 23 gólů, hráč 3. dne 1. sezóny 1v1 ligy. Do druhé sezóny již nenastoupil poté co ukončil svou kariéru.</p>
-      <img src="images/sasek.jpg" alt="Legenda šašek" class="card-img">
+    <div class="hm-content">
+      <!-- levý panel: timeline / content pro aktivní season -->
+      <div class="hm-left">
+        <div class="season-panel" id="seasonPanel">
+          <!-- timeline bude renderováno sem -->
+        </div>
+
+        <div class="records-panel" id="recordsPanel">
+          <h3>Rekordy ligy</h3>
+          <ul id="recordsList">
+          <li>Nejvíce titulů: Jencek (1)</li>
+          <li>Nejméně obdržených gólů během 1 sezóny: Kika (32, 1. sezóna)</li>
+          <li>Nejvíce vstřelených gólů během 1 sezóny: Jencek (70, 1. sezóna)</li>
+          <li>Nejvíce žlutých karet v kariéře: Šašek a Ondřej (3)</li>
+          <li>Nejvíce ocenění hráče dne: Jencek, Ondřej a Šašek (1)</li>
+          <li>Nejrychlejší gól: Šašek (0:08,02)</li>
+          <li>Nejvíc vyhraných zápasů v řadě (pouze v lize): Jencek (7)</li>
+          <li>Nejvíce čistých kont: Autista, Kika a Jencek (1)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- pravý panel: Hall of Fame + galerie -->
+      <aside class="hm-right">
+        <section class="hof-section">
+          <h3>Hall of Fame</h3>
+          <div class="hof-grid" id="hofGrid"></div>
+        </section>
+
+        <section class="gallery-section">
+        <h3>Fotogalerie</h3>
+           <div class="mini-gallery-grid" id="miniGallery">
+            <img src="images/autista3.jpg" alt="foto" class="gal-img" data-caption="<cite>18.10.2025 - Ondřej během prvního hracího dne sezóny 2025/26</cite>">
+            <img src="images/autista2.jpg" alt="foto" class="gal-img" data-caption="<cite>Vzkaz pro Šaška před jeho ukončením kariéry, předáván Ondřejem</cite>">
+            <img src="images/pohar.jpg" alt="foto" class="gal-img" data-caption="<cite>Putovní pohár pro vítěze ligy</cite>">
+            <img src="images/jencek.jpg" alt="foto" class="gal-img" data-caption="<cite>Jencek - vítěž první sezóny (2025)</cite>">
+            <img src="images/autista1.jpg" alt="foto" class="gal-img" data-caption="<cite>Ondřej s medailí za druhé místo - sezóna 2025</cite>">
+            <img src="images/kikaautista.jpg" alt="foto" class="gal-img" data-caption="<cite>26.8.2025 - Zápas mezi TJ Baník Brodské a Gurt Yo</cite>">
+            <img src="images/sasek.jpg" alt="foto" class="gal-img" data-caption="<cite>13.7.2025 - Šašek hráčem 3. hracího dne první sezóny</cite>">
+            <img src="images/jencek2.jpg" alt="foto" class="gal-img" data-caption="<cite>13.7.2025 - Jencek v zápase proti Polským Špačkům</cite>">
+            <img src="images/1zapas.jpg" alt="foto" class="gal-img" data-caption="<cite>22.6.2025 - Zápas mezi FC Sudí Podplacen a Gurt Yo</cite>"> 
+            <img src="images/kika1.jpg" alt="foto" class="gal-img" data-caption="<cite>22.6.2025 - Zápas mezi týmy FC Sudí Podplacen a TJ Baník Brodské</cite>">
+             
+           </div>
+      </section>
+
+      </aside>
     </div>
-    <div class="card">
-      <h3>Vítěz 1. sezóny 1v1 ligy</h3>
-      <p>V první sezóně dotáhl Jencek tým FC Sudí Podplacen k titulu, za celou sezónu získal 22 bodů.</p>
-      <img src="images/jencek.jpg" alt="Vítěz 1. ligy" class="card-img">
+
+    <!-- vyjížděcí karta pro detail legendy -->
+    <div class="legend-panel" id="legendPanel" aria-hidden="true">
+      <button class="legend-close" id="legendClose">✕</button>
+      <div class="legend-inner" id="legendInner"></div>
     </div>
-    <div class="card">
-      <h3>Trofej ligy</h3>
-      <p>Putovní pohár udělovaný od roku 2025.</p>
-      <img src="images/pohar.jpg" alt="Trofej" class="card-img-pohar">
-    </div>
-    <div class="card">
-      <h3>SuperCup</h3>
-      <p>Kromě 1v1 ligy se v rámci svazu hraje ještě jedna soutěž na klubové úrovni, a to SuperCup. Jeho první ročník ovládl tým AC Sparta Praha poté co naprosto dominoval po dobu celé soutěže.</p>
-      <img src="images/supercup.jpg" alt="Trofej" class="card-img">
-    </div>
-    <div class="card">
-      <h3>Historicky 1. zápas</h3>
-      <p>1. zápas v historii celého svazu se odehrál již 22. června 2025, jednalo se o derby mezi týmy FC Sudí Podplacen a FC Gurt Yo. Zápas skončil výhrou domácího celku za výsledku 10:6.</p>
-      <img src="images/1zapas.jpg" alt="Trofej" class="card-img">
-    </div> 
+    
+    
+
+</div>
+    
   </div>
-
-<div class="museum-grid">
-    <div class="card">
-      <h3>Jan Novák</h3>
-      <p>Legenda klubu – 120 gólů, 3 tituly.</p>
-      <img src="images/legend1.jpg" alt="Legenda" class="card-img">
-    </div>
-    <div class="card">
-      <h3>Vítěz sezóny 2022</h3>
-      <p>Tým A po napínavém finále 2:1.</p>
-      <img src="images/winner2022.jpg" alt="Vítěz 2022" class="card-img">
-    </div>
-    <div class="card">
-      <h3>Trofej ligy</h3>
-      <p>Putovní pohár udělovaný od roku 2000.</p>
-      <img src="images/trophy.jpg" alt="Trofej" class="card-img">
-    </div>
-  </div>
-
 </section>
-
+</div>
   <script>
     // 🧮 Skript pro výpočet tabulky
     function renderTable() {
@@ -535,22 +953,305 @@
 
     renderTable();
     
-    // 🎞️ Posouvání obrázků v sekci Zápasy
+    
+// 🎞️ Posouvání obrázků v sekci Zápasy
 document.querySelectorAll(".zapasy-section").forEach(section => {
   const scrollContainer = section.querySelector(".zapasy-scroll");
   const leftBtn = section.querySelector(".arrow.left");
   const rightBtn = section.querySelector(".arrow.right");
 
   leftBtn.addEventListener("click", () => {
-    scrollContainer.scrollBy({ left: -240, behavior: "smooth" });
+    scrollContainer.scrollBy({ left: -300, behavior: "smooth" });
   });
 
   rightBtn.addEventListener("click", () => {
-    scrollContainer.scrollBy({ left: 240, behavior: "smooth" });
+    scrollContainer.scrollBy({ left: 300, behavior: "smooth" });
   });
 });
 
 
+/* ===== Historie/Muzeum - data (upravitelné) ===== */
+const seasonsData = [
+  {
+    id: "2025",
+    title: "Sezóna 2025",
+    year: "2025",
+    summary: "První sezóna nové ligy. 4 týmy, plno akce.",
+    items: [
+      { title: "Vítěz:<br>2. Místo:<br>3. Místo:<br>4. Místo:", text: "FC Sudí Podplacen<br>Gurt Yo<br>Baník Brodské<br>Polští špačci" },
+      { title: "Nejlepší střelec: <br>Nejméně <br>obdržených gólů:", text: "Jencek - 70<br><br> Kika - 32" }, 
+      { title: "Žluté karty:", text: "Šašek - 3<br>Ondřej - 3<br>Jencek - 1" },
+    ],
+    
+    
+    
+  },
+  {
+    id: "2025/26",
+    title: "Sezóna 2025/26",
+    year: "2025/26",
+    summary: "Druhá sezóna. 2 nováčci, chybí Šašek. 5 týmů.",
+    items: [
+      { title: "Vítěz:", text: "Zatím neznámý" },
+      { title: "Nejlepší střelec: <br>Nejméně <br>obdržených gólů:", text: "Jencek - 12<br><br> --- - ---" }, 
+      { title: "Žluté karty:", text: "Lily - 1" }
+    ],
+    
+    
+    
+  },
+  
+];
+
+/* Legends (Hall of Fame) */
+const legendsData = [
+  { id:"l1", 
+  name:"Šašek", 
+  img:"images/sasek.jpg", 
+  bio:"Legenda ligy, 1 sezóna, 23 gólů. Do druhé sezóny bohužel nenastoupil. ", 
+  stats: {
+      goals: 23,
+      goalsAgainst: 60,
+      cleanSheets: 0,
+      yellowCards: 3,
+      titles: "0"
+    }
+  },
+
+  { id:"l2", 
+  name:"Jencek", 
+  img:"images/jencek2.jpg", 
+  bio:"Vítěz první sezóny, ve které nastřílel 70 gólů.", 
+  stats: {
+      goals: 81,
+      goalsAgainst: 37,
+      cleanSheets: 1,
+      yellowCards: 1,
+      titles: "1"
+    }
+  },
+
+  { id:"l3", 
+  name:"Autista", 
+  img:"images/autista1.jpg", 
+  bio:"Útočná legenda s Brazilskými kořeny, 2. místo v první sezóně.", 
+  stats: {
+      goals: 41,
+      goalsAgainst: 53,
+      cleanSheets: 1,
+      yellowCards: 3,
+      titles: "0"
+    }
+  },
+
+  { id:"l4", 
+  name:"Kika", 
+  img:"images/kika1.jpg", 
+  bio:"Český Araujo, nejlepší obrana díky které v první sezóně obdržela pouze 32 branek.",
+  stats: {
+      goals: 37,
+      goalsAgainst: 38,
+      cleanSheets: 1,
+      yellowCards: 0,
+      titles: "0"
+    }
+  }
+];
+
+/* ===== Inicializace UI pro Historii ===== */
+(function initHistoryModule(){
+  const tabsContainer = document.querySelector('.history-tabs');
+  const seasonPanel = document.getElementById('seasonPanel');
+  const recordsList = document.getElementById('recordsList');
+  const hofGrid = document.getElementById('hofGrid');
+  const miniGallery = document.getElementById('miniGallery');
+
+  // naplníme tabs
+  seasonsData.forEach((s, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = s.title;
+    btn.setAttribute('data-season', s.id);
+    btn.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      tabsContainer.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected','false'));
+      btn.setAttribute('aria-selected','true');
+      renderSeason(s.id);
+    });
+    tabsContainer.appendChild(btn);
+  });
+
+  // naplnit hof grid
+  legendsData.forEach(l => {
+    const card = document.createElement('div');
+    card.className = 'hof-card';
+    card.innerHTML = `<img src="${l.img}" alt="${l.name}"><div><strong>${l.name}</strong><div style="font-size:13px;color:#cfe7ff;margin-top:6px">Klikni pro detail</div></div>`;
+    card.addEventListener('click', () => openLegendPanel(l));
+    hofGrid.appendChild(card);
+  });
+
+// initial render
+renderSeason(seasonsData[0].id);
+
+function renderSeason(id) {
+  const s = seasonsData.find(x => x.id === id);
+  if (!s) return;
+
+  // 📌 Panel má nově fixní šířku a více místa
+  seasonPanel.innerHTML = `
+    <div class="season-header">
+      <h2>${s.title}</h2>
+      <p class="season-summary">${s.summary}</p>
+    </div>
+
+    <div class="season-details">
+      ${(s.items || []).map(it => `
+        <div class="season-details-item">
+          <h4>${it.title}</h4>
+          <p>${it.text}</p>
+        </div>
+      `).join("")}
+    </div>
+
+    
+
+    
+  `;
+
+  // 🎥 Lightbox click handling
+  
+  //galleryImages.forEach(img => {
+  //  img.addEventListener("click", () => openLightbox(".mini-gallery", parseInt(img.dataset.index)));
+  //});
+  //lbOverlay.addEventListener("click",()=>{
+  //lbOverlay.classList.remove("show");
+  //lbImg.src = "";
+//});
+
+}
+  /* LEGEND PANEL */
+  const legendPanel = document.getElementById('legendPanel');
+  const legendInner = document.getElementById('legendInner');
+  const legendClose = document.getElementById('legendClose');
+
+  function openLegendPanel(legend){
+    legendInner.innerHTML = `
+      <img src="${legend.img}" alt="${legend.name}">
+      <h3>${legend.name}</h3>
+      <p>${legend.bio}</p>
+      <div class="legend-stats">
+      <h4>Osobní rekordy:</h4>
+      <ul>
+        <li><strong>Góly:</strong> ${legend.stats.goals}</li>
+        <li><strong>Obdržené góly:</strong> ${legend.stats.goalsAgainst}</li>
+        <li><strong>Čistá konta:</strong> ${legend.stats.cleanSheets}</li>
+        <li><strong>Žluté karty:</strong> ${legend.stats.yellowCards}</li>
+        <li><strong>Počet titulů:</strong> ${legend.stats.titles}</li>
+      </ul>
+    </div>
+    `;
+    legendPanel.classList.add('open');
+    legendPanel.setAttribute('aria-hidden','false');
+  }
+  legendClose.addEventListener('click', () => {
+    legendPanel.classList.remove('open');
+    legendPanel.setAttribute('aria-hidden','true');
+  });
+
+  
+
+})();
+
+
   </script>
+  
+
+
+<script>
+
+
+/* === Renderování záložek sezón === */
+function renderSeasons() {
+  const tabs = document.querySelector(".history-tabs");
+  tabs.innerHTML = "";
+
+  seasonsData.forEach((season, index) => {
+    const btn = document.createElement("button");
+    btn.textContent = season.title;
+    btn.setAttribute("aria-selected", index === 0 ? "true" : "false");
+    btn.addEventListener("click", () => selectSeason(season.id));
+    tabs.appendChild(btn);
+  });
+
+  selectSeason(seasonsData[0].id);
+}
+
+/* === Výběr sezóny === */
+function selectSeason(seasonId) {
+  const season = seasonsData.find(s => s.id === seasonId);
+  if(!season) return;
+
+  // update tab selected state
+  document.querySelectorAll(".history-tabs button").forEach(btn => {
+    btn.setAttribute("aria-selected", btn.textContent === season.title ? "true" : "false");
+  });
+
+  // SEASON PANEL (bez velké kruhové galerie) - jen text, detaily a rekordy
+  document.querySelector("#seasonPanel").innerHTML = `
+    <div class="season-header"><h2>${season.title}</h2></div>
+    <p class="season-summary">${season.summary}</p>
+
+    <div class="season-details">
+      ${season.items.map(i => `
+        <div class="season-details-item"><strong>${i.title}:</strong> ${i.text}</div>
+      `).join("")}
+    </div>
+
+    
+  `;}
+  </script>
+
+<div id="lightbox-overlay" aria-hidden="true">
+  <img id="lightbox-img" src="" alt="preview">
+  <p id="lightboxCaption" class="lightbox-caption"></p>
+</div>
+
+<script>
+const lbOverlay = document.getElementById("lightbox-overlay");
+const lbImg = document.getElementById("lightbox-img");
+const lightboxCaption = document.getElementById("lightboxCaption");
+
+document.querySelectorAll("#miniGallery img").forEach((img) => {
+  img.addEventListener("click", () => {
+    lbImg.src = img.src;
+    lightboxCaption.innerHTML = img.dataset.caption || ""; // ← POPISEK
+    lbOverlay.style.display = "flex";
+  });
+});
+
+lbOverlay.addEventListener("click", () => {
+  lbOverlay.style.display = "none";
+  lbImg.src = "";
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    lbOverlay.style.display = "none";
+    lbImg.src = "";
+  }
+});
+</script>
+
+<script>
+function movePlan(direction) {
+    const container = document.getElementById("planContainer");
+    const itemWidth = container.querySelector(".plan-item").offsetWidth + 20; 
+    container.scrollLeft += direction * itemWidth;
+}
+</script>
+
+<footer>
+    © 2025 1v1 Liga Hodonín - Svaz Malého Fotbalu - Všechna práva vyhrazena
+  </footer>
 </body>
 </html>
