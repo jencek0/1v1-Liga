@@ -673,8 +673,8 @@
 /* 🔥 Globální scale pro mobily – zachová vzhled, ale zmenší obsah */
 @media (max-width: 900px) {
     body {
-        transform: scale(0.88);
-        transform-origin: top center;
+        transform: scale(0.78);
+        transform-origin: top left;
         width: 128% !important;
     }
 }
@@ -682,17 +682,32 @@
 /* Ještě menší mobily */
 @media (max-width: 600px) {
     body {
-        transform: scale(0.75);
-        transform-origin: top center;
+        transform: scale(0.65);
+        transform-origin: top left;
         width: 155% !important;
     }
 }
 
 @media (max-width: 450px) {
     body {
-        transform: scale(0.68);
-        transform-origin: top center;
+        transform: scale(0.58);
+        transform-origin: top left;
         width: 175% !important;
+    }
+}
+@media (max-width: 900px) {
+  .celemuzeum {
+    width: 150%;
+  }
+}
+@media (max-width: 600px) {
+  .celemuzeum {
+    width: 160%;
+  }
+}
+@media (max-width: 450px) {
+    .celemuzeum {
+        width: 180%;
     }
 }
 
