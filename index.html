@@ -361,16 +361,7 @@
   transform: scale(4) center;
   box-shadow: 0 12px 30px rgba(0,0,0,0.45);  }
 
-/* responsive */
-@media (max-width: 980px) {
-  .hm-content { grid-template-columns: 1fr; }
-  .hof-grid { grid-template-columns: repeat(3, 1fr); }
-  .legend-panel { right: -100%; width: 96%; left: 2%; top: 60px; }
-}
-@media (max-width: 640px) {
-  .hof-grid { grid-template-columns: repeat(2, 1fr); }
-  .mini-gallery img { width:80px; height:60px; }
-}
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -445,62 +436,8 @@
 
 
 
-/* 📱 RESPONSIVE DESIGN PRO MOBIL */
-@media (max-width: 900px) {
-  /* Změní rozložení na svislé (panely nad a pod tabulkou) */
-  .container {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    gap: 20px;
-  }
 
-  .side-panel {
-    width: 95%;
-    order: 1; /* levý panel nahoře */
-  }
 
-  main {
-    width: 95%;
-    order: 2;
-    overflow-x: auto; /* umožní posouvat tabulku, když je moc široká */
-  }
-
-  .right {
-    order: 3; /* pravý panel dole */
-  }
-
-  /* Tabulka se nebude rozbíjet, ale bude se posouvat do strany */
-  table {
-    font-size: 14px;
-    min-width: 600px; /* nechá tabulku čitelnou */
-    border: 2px solid #0078d7;
-  }
-
-  th, td {
-    padding: 8px;
-  }
-
-  h1 {
-    font-size: 22px;
-  }
-}
-
-/* 📱 Ještě menší obrazovky (do 600px) */
-@media (max-width: 600px) {
-  .museum-grid {
-    grid-template-columns: 1fr; /* každá karta na samostatném řádku */
-  }
-
-  .card {
-    width: 90%;
-    height: auto;
-  }
-
-  .side-panel {
-    font-size: 14px;
-  }
-}
 
 /* --- BLOK ZÁPASY - finální styl --- */
 .h1zapasy {
@@ -739,6 +676,102 @@
 
 .plan-btn:hover {
     background: #666;
+}
+
+/* ============================================================
+   📱 RESPONSIVITA – VARIANTA A (VŠECHNO ZŮSTÁVÁ VEDLE SEBE)
+   ============================================================ */
+
+/* 🔥 Globální scale pro mobily – zachová vzhled, ale zmenší obsah */
+@media (max-width: 900px) {
+    body {
+        transform: scale(0.78);
+        transform-origin: top center;
+        width: 128% !important;
+    }
+}
+
+/* Ještě menší mobily */
+@media (max-width: 600px) {
+    body {
+        transform: scale(0.65);
+        transform-origin: top center;
+        width: 155% !important;
+    }
+}
+
+@media (max-width: 450px) {
+    body {
+        transform: scale(0.58);
+        transform-origin: top center;
+        width: 175% !important;
+    }
+}
+
+/* ======================================
+   🟦 TABULKA – zůstane 2 sloupce
+   ====================================== */
+.table-wrapper {
+    overflow-x: auto;
+}
+.table {
+    min-width: 650px;
+}
+
+
+
+
+/* ======================================
+   🟧 HISTORIE / MUZEUM
+   ====================================== */
+.history-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.history-tabs button {
+    flex-shrink: 0;
+}
+
+/* Sezónní boxy se nesmí rozpadnout */
+#seasonPanel {
+    min-width: 550px;
+}
+
+/* ======================================
+   🟫 GALERIE – 3×4 grid zachován
+   ====================================== */
+.gallery-grid {
+    display: flex !important;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+.gallery-grid img {
+    min-width: 170px;
+}
+
+/* ======================================
+   ▶️ Lightbox fix – mobilní fullscreen
+   ====================================== */
+#lightbox-overlay img {
+    max-height: 90vh !important;
+    max-width: 90vw !important;
+}
+
+/* ======================================
+   🟥 Pravý a levý panel – zůstává dvousloupec
+   ====================================== */
+.main-layout {
+    display: flex !important;
+    gap: 20px;
+    overflow-x: auto;
+    min-width: max-content;
+}
+
+.left-panel,
+.right-panel {
+    min-width: 360px;
+    flex-shrink: 0;
 }
 
   </style>
