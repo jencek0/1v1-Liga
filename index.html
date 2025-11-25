@@ -312,9 +312,10 @@
 
 /* legend slide panel */
 .legend-panel {
+  display: none;
   position: fixed;
-  right: -420px; /* hidden by default */
-  top: 60px;
+  right: 0;
+  top: 30px;
   width: 380px;
   max-width: 92%;
   height: calc(100% - 120px);
@@ -322,10 +323,13 @@
   border-radius: 12px;
   padding: 18px;
   box-shadow: 0 30px 60px rgba(1,12,25,0.6);
-  transition: right .34s cubic-bezier(.2,.9,.25,1);
-  z-index: 1200;
+  z-index: 999000;
   overflow:auto;
   border:1px solid rgba(255,255,255,0.04);
+}
+/* KDYŽ JE OTEVŘENO */
+.legend-panel.open {
+  display: block;
 }
 .legend-panel.open { right: 28px; }
 .legend-close {
@@ -650,6 +654,7 @@
 
 /* === LIGHTBOX === */
 #lightbox-overlay {
+  display: none;
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.88);
@@ -1209,7 +1214,7 @@ function selectSeason(seasonId) {
   `;}
   </script>
 
-<div id="lightbox-overlay" aria-hidden="true" style="display:none">
+<div id="lightbox-overlay" aria-hidden="true" >
   <img id="lightbox-img" src="" alt="preview">
   <p id="lightboxCaption" class="lightbox-caption"></p>
 </div>
