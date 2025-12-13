@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1v1 Liga – Zápasy</title>
+  <link rel="shortcut icon" href="images/1v1logo – upraveno.jpg" type="image/x-icon">
+  <style>
+    body{
+      margin:0;
+      font-family:"Segoe UI", sans-serif;
+      background:linear-gradient(135deg,#0c1b2e,#0f2744);
+      color:#eaf3ff;
+    }
+
+    header{
+      padding:30px;
+      text-align:center;
+      background:linear-gradient(180deg,#081426,#0f2744);
+      box-shadow:0 6px 25px rgba(0,0,0,.4);
+    }
+
+    header h1{margin:0;font-size:42px;}
+    header p{opacity:.8;margin-top:8px;}
+
+    .container{
+      max-width:1200px;
+      margin:40px auto;
+      padding:0 20px;
+      display:flex;
+      flex-direction:column;
+      gap:50px;
+    }
+
+    /* === TIMELINE === */
+    .timeline-section h2{text-align:center;font-size:34px;margin-bottom:20px;}
+
+    .timeline-horizontal{
+      display:flex;
+      justify-content:space-between; /* roztáhne prvky po celé šířce */
+      align-items:flex-start;
+      gap:0; /* žádné mezery → vejde se vše */
+      padding:30px 0 50px;
+      position:relative;
+      overflow:visible; /* žádný horizontální scroll */
+      }
+
+
+     .timeline-horizontal::before{
+       content:"";
+       position:absolute;
+       top:72px; /* ⬅️ POSUN DOLŮ – za body, ne do nadpisů */
+       left:-150px;
+       right: -150px;
+       height:4px;
+       background:rgba(255,255,255,.25);
+       z-index:0; /* ⬅️ linka je úplně vzadu */
+       }
+
+    .event{
+      flex:1;              /* každý bod má stejnou šířku */
+      min-width:0;         /* důležité pro zrušení scrollu */
+      text-align:center;
+      position:relative;
+    }
+
+    .event::before{
+      content:"";
+      position:absolute;
+      top:36px;
+      left:50%;
+      transform:translateX(-50%);
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background:#4da3ff; /* matchday */
+      box-shadow:0 0 0 6px rgba(77,163,255,.25);
+    }
+
+    .event.start::before{
+      background:#4dff88;
+      box-shadow:0 0 0 6px rgba(77,255,136,.25);
+    }
+
+    .event.pause::before{
+      background: #eaf3ff;
+      box-shadow:0 0 0 6px rgba(255, 223, 223, 0.25);
+    }
+
+    .event.end::before{
+      background:#ffc83d;
+      box-shadow:0 0 0 6px rgba(255,200,61,.25);
+    }
+
+    .event.repre.pause::before{
+      background: #ff5a5a;
+      box-shadow:0 0 0 6px rgba(255,90,90,.25);
+    }
+
+    .event h4{margin:0 0 50px;font-size:18px;}
+    .event span{font-size:14px;opacity:.7;}
+
+    /* === PLAYER OF WEEK === */
+    .player-week{
+      display:flex;              /* ⬅️ JASNĚ vedle sebe */
+      align-items:flex-start;    /* zarovnání nahoře */
+      gap:30px;
+      background:rgba(255,255,255,.05);
+      padding:24px;
+      border-radius:16px;
+      box-shadow:0 8px 30px rgba(0,0,0,.45);
+    }
+
+    .player-week img{
+      width:100%;
+      max-width:220px;      /* ⬅️ vrátí velikost jako dřív */
+      height:220px;         /* ⬅️ fixní výška */
+      object-fit:cover;     /* ⬅️ ořez bez deformace */
+      border-radius:14px;
+      box-shadow:0 6px 20px rgba(0,0,0,.45);
+    }
+    .badge{display:inline-block;padding:6px 14px;border-radius:20px;background:#ffc83d;color:#000;font-weight:700;}
+
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;}
+    .stat{background:rgba(255,255,255,.08);padding:12px;border-radius:10px;text-align:center;}
+
+    /* === REPORTY GRID === */
+.match-reports h2{font-size:34px;margin-bottom:20px;}
+
+/* sekce jako celek NESROLLUJE */
+.match-reports{ }
+
+/* scrolluje se POUZE tento wrapper */
+.reports-scroll{
+  /* PŘESNĚ 3 ŘADY: 3×120px + 2×16px */
+  max-height: calc(120px * 3 + 16px * 2);
+  overflow-y:auto;
+  padding-right:6px;
+}
+
+.report-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.report-card{
+  background:rgba(255,255,255,.05);
+  border-radius:14px;
+  padding:10px;            /* ⬅️ menší padding */
+  cursor:pointer;
+  transition:.25s;
+  height:120px;            /* ⬅️ MENŠÍ karta */
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.report-card:hover{transform:translateY(-6px);}
+.score{font-size:22px;font-weight:700;margin:6px 0;}
+
+    /* === MODAL === */
+    .report-modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.85);
+      z-index:999999;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .report-modal.open{display:flex;}
+
+    .report-detail{
+      background:#0f2744;
+      max-width:600px;
+      width:90%;
+      padding:26px;
+      border-radius:16px;
+    }
+
+    .report-close{
+      position:absolute;
+      top:20px;
+      right:20px;
+      background:none;
+      border:none;
+      font-size:26px;
+      color:white;
+      cursor:pointer;
+    }
+
+    footer{text-align:center;padding:30px;background:#081426;opacity:.7;margin-top:60px;}
+
+    @media(max-width:900px){
+      .report-grid{grid-template-columns:repeat(2,1fr);}    
+      /* hráč kola ZŮSTÁVÁ vedle textu i na menších šířkách */
+      .player-week{grid-template-columns:220px 1fr;}
+    }    
+      .player-week{grid-template-columns:1fr;}
+      .timeline-horizontal{gap:20px;} /* na mobilu menší rozestupy */
+    
+      .player-week{grid-template-columns:1fr;}
+    
+    @media(max-width:600px){
+      .report-grid{grid-template-columns:1fr;}
+      /* až na úplně malém mobilu se může dát obrázek nahoru */
+      .player-week{grid-template-columns:1fr;}
+    }
+    
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚽ Zápasy 1v1 ligy</h1>
+  <p>Matchdaye, reporty a klíčové momenty sezóny</p>
+  <a href="index.html" style="color: #bcd4f5; text-decoration: none; font-weight: 600; display:inline-block; margin-top:10px;">← Zpět na hlavní stránku</a>
+</header>
+
+<div class="container">
+ 
+  <!-- PLAYER OF WEEK -->
+  <section class="player-week">
+    <img src="images/1v1logo – upraveno.jpg" alt="Hráč kola">
+    <div>
+      <span class="badge">Hráč kola</span>
+      <h2>Neurčen</h2>
+      <p>Dominantní výkon v posledním kole.</p>
+      <div class="stats">
+        <div class="stat"><strong>Góly</strong><br>x</div>
+        <div class="stat"><strong>Výhry</strong><br>x</div>
+        <div class="stat"><strong>Inkasované góly</strong><br>x</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section">
+    <h2>📅 Průběh sezóny</h2>
+    <div class="timeline-horizontal">
+      <div class="event start"><h4>Start sezóny</h4><span>18. 10. 2025</span></div>
+      <div class="event"><h4>Matchday 1</h4><span>18. 10. 2025</span></div>
+      <div class="event repre pause"><h4>Repre Pauza</h4><span>15. 11. 2025</span></div>
+      <div class="event pause"><h4>Zimní Pauza</h4><span>17. 11. 2025 - 28. 2. 2026</span></div>
+      <div class="event"><h4>Matchday 2</h4><span>Datum bude upřesněno</span></div>
+      <div class="event"><h4>Matchday 2</h4><span>Datum bude upřesněno</span></div>
+      <div class="event end"><h4>Konec sezóny</h4><span>Datum bude upřesněno</span></div>
+    </div>
+  </section>
+
+  
+
+  <!-- REPORTY -->
+    <!-- REPORTY -->
+  <section class="match-reports">
+    <h2>📰 Match reporty</h2>
+
+    <!-- scrolluje se POUZE tento wrapper -->
+    <div class="reports-scroll">
+      <div class="report-grid">
+        <!--SEM PŘIDÁVAT REPORT KARTY-->
+
+        <div class="report-card" data-title="FK Hodonín vs FC Barcelona" data-score="1 : 5" data-text="Na nováčka ligy FK Hodonín čekal již v jeho prvním zápase Vítěž minulého ročníku ligy FC Barcelona. Hodonín sice předvedl sympatický výkon a zápas byl v celku vyrovnaný ale výsledek mluví jasně ve prospěch Barcelony 5:1.">
+          <strong>FK Hodonín vs FC Barcelona</strong>
+          <div class="score">1 : 5</div>
+        </div>
+        <div class="report-card" data-title="FC Barcelona vs ŠK Slovan Bratislava" data-score="6 : 1" data-text="Za stejného výsledku jako zahajovací utkání sezóny, tedy 6:1, skončil i druhý zápas ve kterém Barcelona porazila Slovan s jistotou. Slovan se pokusil Barcelonu potrápit hlavně dlouhými střelami kterým ale scházela přesnost a trocha štěstí.">
+          <strong>FC Barcelona vs ŠK Slovan Bratislava</strong>
+          <div class="score">6 : 1</div>
+        </div>
+        <div class="report-card" data-title="1. FC Slovácko vs AC Sparta Praha" data-score="1 : 6" data-text="První zápas sezóny 2025/26 se odehrál mezi týmy 1. FC Slovácko a AC Sparta Praha. Sparta už od začátku dominovala a Slovácku se nedařilo tlak bránit. I přes branku kterou Slovácko vstřelilo byl zápas rozhodnutý už v půli. Konečný výsledek 1:6 celkem dobře shrnuje celé utkání.">
+          <strong>1. FC Slovácko vs AC Sparta Praha</strong>
+          <div class="score">1 : 6</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- MODAL -->
+<div class="report-modal" id="reportModal">
+  <button class="report-close" id="closeModal">✕</button>
+  <div class="report-detail">
+    <h3 id="modalTitle"></h3>
+    <div class="score" id="modalScore"></div>
+    <p id="modalText"></p>
+  </div>
+</div>
+
+<footer>&copy; 2025 1v1 Liga Hodonín - Svaz Malého Fotbalu - Všechna práva vyhrazena</footer>
+
+<script>
+  const modal = document.getElementById("reportModal");
+  const title = document.getElementById("modalTitle");
+  const score = document.getElementById("modalScore");
+  const text = document.getElementById("modalText");
+  const close = document.getElementById("closeModal");
+
+  document.querySelectorAll('.report-card').forEach(card=>{
+    card.addEventListener('click',()=>{
+      title.textContent = card.dataset.title;
+      score.textContent = card.dataset.score;
+      text.textContent = card.dataset.text;
+      modal.classList.add('open');
+    });
+  });
+
+  close.addEventListener('click',()=>modal.classList.remove('open'));
+  modal.addEventListener('click',(e)=>{if(e.target===modal) modal.classList.remove('open');});
+</script>
+
+</body>
+</html>
