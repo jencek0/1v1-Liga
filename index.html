@@ -20,8 +20,8 @@
   <script>
     const leftPanelContent = `
     <h2>📰 Novinky</h2>
-    <p><strong>18. října:</strong><br> První 3 zápasy odehrány, 2 výhry si připsal tým FC Barcelona,<br> 3 body si odnáší také AC Sparta Praha.</p>
-    <p><strong>10. října:</strong> Hráčská legenda pod přezdívkou "David Neres", Šašek, ze zdravotních důvodů odstoupil ze všech soutěží a byl nahrazen.</p>
+    <p><strong>24. listopadu:</strong><br>Byly vyhlášeny ankety sezóny 2025. Hráčem sezóny se stal Jencek. Nejhezčí gól vstřelil Ondřej.</p>
+    <p><strong>18. října:</strong><br>První 3 zápasy odehrány, 2 výhry si připsal tým FC Barcelona,<br> 3 body si odnáší také AC Sparta Praha.</p>
 
     <a href="novinky.html" style="display:inline-block; margin-top:10px; color:#0078d7; font-weight:bold; text-decoration:none;">
       ➤ Další novinky
@@ -312,24 +312,36 @@
 
 /* legend slide panel */
 .legend-panel {
-  display: none;
   position: fixed;
-  right: 0;
+  right: -420px;              /* ← schované mimo obrazovku */
   top: 30px;
   width: 380px;
   max-width: 92%;
   height: calc(100% - 120px);
+
   background: linear-gradient(180deg, rgba(1, 4, 12, 0.877),#080b1b, rgba(29, 38, 66, 0.925));
   border-radius: 12px;
   padding: 18px;
+
   box-shadow: 0 30px 60px rgba(1,12,25,0.6);
+  border:1px solid rgba(255,255,255,0.04);
+
   z-index: 999000;
   overflow:auto;
-  border:1px solid rgba(255,255,255,0.04);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    right 0.45s cubic-bezier(.22,1,.36,1),
+    opacity 0.35s ease;
 }
 /* KDYŽ JE OTEVŘENO */
 .legend-panel.open {
   display: block;
+  right: 28px;
+  opacity: 1;
+  pointer-events: auto;
 }
 .legend-panel.open { right: 28px; }
 .legend-close {
@@ -747,7 +759,6 @@
     background: #666;
 }
 
-
   </style>
 </head>
 
@@ -855,6 +866,9 @@
       <div class="fade right-fade"></div>
     </div>
   </div>
+  <a href="zapasy.html" style="display:inline-block; margin-top:10px; color:#0078d7; font-weight:bold; text-decoration:none; font-size: 23px;">
+      ➤ Další Zápasy
+    </a>
 </section>
 
 <div class="celemuzeum">
