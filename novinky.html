@@ -61,6 +61,25 @@ html, body {
 main {
   flex: 1; /* roztáhne hlavní obsah, aby footer byl dole */
 }
+
+/* SCROLL BAR*/
+    /* Chrome / Edge / Safari */
+.reports-scroll::-webkit-scrollbar{
+  width:2px;
+}
+.reports-scroll::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.08);
+}
+.reports-scroll::-webkit-scrollbar-thumb{
+  background:#4da3ff;
+  border-radius:10px;
+}
+
+/* Firefox */
+.reports-scroll{
+  scrollbar-width: 100%;
+  scrollbar-color: #4da3ff rgba(6, 6, 70, 0.521);
+}
   </style>
 </head>
 <body>
