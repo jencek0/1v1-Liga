@@ -759,6 +759,25 @@
     background: #666;
 }
 
+
+/* SCROLL BAR*/
+    /* Chrome / Edge / Safari */
+.mini-gallery-grid::-webkit-scrollbar{
+  width:2px;
+}
+.gallery-section-scroll::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.08);
+}
+.mini-gallery-grid::-webkit-scrollbar-thumb{
+  background:#4da3ff;
+  border-radius:10px;
+}
+
+/* Firefox */
+.mini-gallery-grid{
+  scrollbar-width: 100%;
+  scrollbar-color: #1d436b rgba(6, 6, 70, 0.521);
+}
   </style>
 </head>
 
