@@ -1,5 +1,4 @@
 const newsData = [
-  
   {
     date: "21. 3. 2026",
     title: "Začátek jarní části ligy",
