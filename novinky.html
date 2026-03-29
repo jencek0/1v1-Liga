@@ -89,55 +89,30 @@ main {
   </header>
 
   <main>
-    <div class="news-entry">
-      <div class="news-date">24. listopadu 2025</div>
-      <div class="news-title">Vyhlášení výherců ocenění</div>
-      <div class="news-text">
-        Byly vyhlášeny ankety sezóny 2025. Hráčem sezóny se stal Jencek. Nejhezčí gól vstřelil Ondřej.
-      </div>
-    </div>
-
-    <div class="news-entry">
-      <div class="news-date">18. října 2025</div>
-      <div class="news-title">První kolo odehráno</div>
-      <div class="news-text">
-        Nová tvář ligy AC Sparta Praha porazila domácí 1.FC Slovácko za výsledku 1:6, stejné skóre bylo i na konci 2. zápasu ve kterém tým <br>ŠK Slovan Bratislava podlehl Barceloně. Ta ve svém 2. utkání výherně navázala a porazila tým FK Hodonín 5:1.
-      </div>
-    </div>
-
-    <div class="news-entry">
-      <div class="news-date">17. října 2025</div>
-      <div class="news-title">Nový člen</div>
-      <div class="news-text">
-        Byl oficiálně ohlášen nový člen ligy, a to tým FK Hodonín. Ten se tak společně s celkem AC Sparta Praha stane nováčkem soutěže a nahradí tým Šaška.
-      </div>
-    </div>
-
-    <div class="news-entry">
-      <div class="news-date">10. října 2025</div>
-      <div class="news-title">Legenda ukončila kariéru?</div>
-      <div class="news-text">
-        Hráčská legenda pod přezdívkou "David Neres", Šašek, ze zdravotních důvodů ukončil svou kariéru. Jeho tým tak odstupuje nejen z 1v1 Ligy, ale také všech soutěží zřizovaných Svazem Malého Fotbalu. Kvůli této ztrátě hráče který ve své první a jediné sezóně nastřílel 23 gólů za 8 zápasů bude Svaz hledat náhradu do další sezóny.
-      </div>
-    </div>
-
-    <div class="news-entry">
-      <div class="news-date">1. září 2025</div>
-      <div class="news-title">Rozlosování sezóny potvrzeno</div>
-      <div class="news-text">
-        Bylo potvrzeno rozlosování základní části nové sezóny 1v1 ligy. <br> První duel mezi Slováckem a Spartou se odehraje již 18. října.
-      </div>
-    </div>
-
-    <div class="news-entry">
-      <div class="news-date">27. srpna 2025</div>
-      <div class="news-title">Liga se rozroste</div>
-      <div class="news-text">
-        Podle nejnovějších informací by se 1v1 Liga měla rozrůst o 1 tým. Tím by měl být AC Sparta Praha který se již prezentoval výhrou 1. ročníku SuperCupu poté co po dobu celého turnaje naprosto dominoval. Je tak jasné že již v první sezóně bude mít ambice útočit na titul.
-      </div>
-    </div>
-
+    <div id="allNews"></div>
   </main>
+
+  <script src="news.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const container = document.getElementById("allNews");
+
+  newsData.forEach(n => {
+    container.innerHTML += `
+      <div class="news-entry">
+        <div class="news-date">${n.date}</div>
+        <div class="news-title">${n.title}</div>
+        <div class="news-text">${n.text}</div>
+      </div>
+    `;
+  });
+
+});
+</script>
+
+
 
   <footer>
     © 2025 1v1 Liga Hodonín - Svaz Malého Fotbalu - Všechna práva vyhrazena
