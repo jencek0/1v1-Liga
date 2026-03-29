@@ -17,26 +17,14 @@
   </script>
 
   <!-- 🔧 SEKCE 2: OBSAH LEVÉHO PANELU -->
-  <script>
-    const leftPanelContent = `
-    <h2>📰 Novinky</h2>
-    <p><strong>24. listopadu:</strong><br>Byly vyhlášeny ankety sezóny 2025. Hráčem sezóny se stal Jencek. Nejhezčí gól vstřelil Ondřej.</p>
-    <p><strong>18. října:</strong><br>První 3 zápasy odehrány, 2 výhry si připsal tým FC Barcelona,<br> 3 body si odnáší také AC Sparta Praha.</p>
-
-    <a href="novinky.html" style="display:inline-block; margin-top:10px; color:#0078d7; font-weight:bold; text-decoration:none;">
-      ➤ Další novinky
-    </a>
-
-    <img src="images/1v1logo – upraveno.jpg" alt="Logo " style="width:70%; border-radius:1px; margin-top:10px;">
-  `;
-  </script>
+  
 
   <!-- 🔧 SEKCE 3: OBSAH PRAVÉHO PANELU -->
   <script>
     const rightPanelContent = `
       <h2>ℹ️ Informace</h2>
       <p><strong>Počet kol odehraných: 1</strong></p>
-      <p><em>Další zápas: 15. listopadu –<br> ŠK Slovan Bratislava vs. 1.FC Slovácko</em></p>
+      <p><em>Další zápas: 11. dubna –<br> ŠK Slovan Bratislava vs. 1.FC Slovácko</em></p>
       <p><strong>Soutěže pod správou svazu:</strong></p>
       <ul>
         <li>1v1 Liga Hodonín</li>
@@ -81,6 +69,26 @@
       justify-content: space-between; /* rozdělí obsah nahoře a dole */
       align-items: center; /* vycentruje obsah vodorovně */
       text-align: center;
+}
+
+    .news-entry{
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+      transition: 0.2s;
+}
+
+.news-entry:hover{
+  opacity: 0.8;
+}
+
+    .news-text{
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* kolik řádků chceš */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
 }
 
     main {
@@ -820,22 +828,22 @@
         <div class="plan-container" id="planContainer">
             <div class="plan-item">
                 <h3>ŠK Slovan Bratislava vs. 1.FC Slovácko</h3>
-                <p>Datum neurčeno</p>
+                <p>11. dubna</p>
             </div>
 
             <div class="plan-item">
                 <h3>AC Sparta Praha vs. ŠK Slovan Bratislava</h3>
-                <p>Datum neurčeno</p>
+                <p>11. dubna</p>
             </div>
 
             <div class="plan-item">
                 <h3>1.FC Slovácko vs. FK Hodonín</h3>
-                <p>Datum neurčeno</p>
+                <p>11. dubna</p>
             </div>
 
             <div class="plan-item">
                 <h3>FC Barcelona vs. 1.FC Slovácko</h3>
-                <p>Datum neurčeno</p>
+                <p>11. dubna</p>
             </div>
 
             <div class="plan-item">
@@ -991,7 +999,7 @@
     }
 
     // 📰 Naplnění postranních panelů
-    document.querySelector("#leftPanel").innerHTML = leftPanelContent;
+    
     document.querySelector("#rightPanel").innerHTML = rightPanelContent;
 
     renderTable();
@@ -1291,6 +1299,43 @@ function movePlan(direction) {
     const itemWidth = container.querySelector(".plan-item").offsetWidth + 20; 
     container.scrollLeft += direction * itemWidth;
 }
+</script>
+
+<script src="news.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const leftPanel = document.getElementById("leftPanel");
+
+  // vytvoří panel + placeholder
+  leftPanel.innerHTML = `
+    <h2>📰 Novinky</h2>
+    <div id="latestNews"></div>
+
+    <a href="novinky.html" style="display:inline-block; margin-top:10px; color:#0078d7; font-weight:bold;">
+      ➤ Další novinky
+    </a>
+
+    <img src="images/1v1logo – upraveno.jpg" style="width:70%; margin-top:10px;">
+  `;
+
+  // vezme poslední 2 novinky
+  const latest = newsData.slice(0, 2);
+
+  const container = document.getElementById("latestNews");
+
+  latest.forEach(n => {
+    container.innerHTML += `
+      <div class="news-entry" onclick="window.location.href='novinky.html'">
+        <div class="news-date">${n.date}</div>
+        <div class="news-title">${n.title}</div>
+        <div class="news-text">${n.text}</div>
+      </div>
+    `;
+  });
+
+});
 </script>
 
 <footer>
