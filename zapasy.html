@@ -138,7 +138,10 @@
 
 .form-table th,
 .form-table td{
-  padding:12px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 12px;
+  padding-top: 12px;
   text-align:center;
 }
 
@@ -160,18 +163,75 @@
 
 
 /*STATISTIKY SEZONY*/
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
-}
-.stat-box{
-  background:rgba(255,255,255,.08);
+.records-board{
+  background: rgba(255,255,255,.05);
   padding:20px;
-  border-radius:14px;
-  text-align:center;
+  border-radius:18px;
 }
 
+.record{
+  display:grid;
+  grid-template-columns: 1fr auto auto;
+  align-items:center;
+  padding:10px 6px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  font-size:17px;
+}
+
+.record:last-child{
+  border-bottom:none;
+}
+
+.label{
+  opacity:.8;
+}
+
+.value{
+  font-weight:700;
+  margin-right:20px;
+}
+
+.number{
+  font-size:22px;
+  font-weight:800;
+  color:#4da3ff;
+}
+
+.stats-wrapper.collapsed .record:nth-child(n+5){
+  display:none;
+}
+.record{
+  transition: all 0.3s ease;
+}
+#toggleStats{
+  display:block;
+  margin:20px auto 0;
+  padding:10px 22px;
+
+  border:none;
+  border-radius:12px;
+
+  background:linear-gradient(135deg,#4da3ff,#1e6bd6);
+  color:#000000;
+
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+
+  box-shadow:0 6px 18px rgba(77,163,255,.35);
+  transition:all .25s ease;
+}
+
+/* hover efekt */
+#toggleStats:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(77,163,255,.5);
+}
+
+/* klik efekt */
+#toggleStats:active{
+  transform:scale(.96);
+}
 
 /*HEAD2HEAD*/
 .h2h-section{
@@ -194,6 +254,7 @@
   border-radius:10px;
   border:none;
   font-size:16px;
+  background-color: rgb(138, 159, 255);
 }
 
 .vs{
@@ -203,18 +264,31 @@
 }
 
 .h2h-btn{
-  padding:10px 20px;
-  border-radius:12px;
+  display:block;
+  margin:20px auto 0;
+  padding:10px 22px;
+
   border:none;
-  background:#4da3ff;
-  color:#000;
+  border-radius:12px;
+
+  background:linear-gradient(135deg,#4da3ff,#1e6bd6);
+  color:#000000;
+
   font-weight:700;
+  font-size:15px;
   cursor:pointer;
+
+  box-shadow:0 6px 18px rgba(77,163,255,.35);
+  transition:all .25s ease;
 }
 
 .h2h-btn:hover{
-  opacity:.85;
-}
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(77,163,255,.5);
+  }
+  .h2h-btn:active{
+    transform:scale(.96);
+  }
 
 .h2h-result{
   margin-top:20px;
@@ -373,18 +447,18 @@
 
 <!--FORMA HRACU-->
   <section class="form-section">
-  <h2>📈 Forma hráčů</h2>
+  <h2>📈 Forma týmů</h2>
 
   <table class="form-table">
     <thead>
       <tr>
-        <th>Hráč</th>
+        <th>Tým</th>
         <th colspan="5">Posledních 5 zápasů</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Jencek</td>
+        <td>FC Barcelona</td>
         <td class="win">V</td>
         <td class="win">V</td>
         <td class="x">X</td>
@@ -393,7 +467,7 @@
       </tr>
 
       <tr>
-        <td>Kika</td>
+        <td>ŠK Slovan Bratislava</td>
         <td class="loss">P</td>
         <td class="x">X</td>
         <td class="x">X</td>
@@ -402,7 +476,7 @@
       </tr>
 
       <tr>
-        <td>Lily</td>
+        <td>FK Hodonín</td>
         <td class="loss">P</td>
         <td class="x">X</td>
         <td class="x">X</td>
@@ -411,7 +485,7 @@
       </tr>
 
       <tr>
-        <td>Pája</td>
+        <td>AC Sparta Praha</td>
         <td class="win">V</td>
         <td class="x">X</td>
         <td class="x">X</td>
@@ -420,7 +494,7 @@
       </tr>
 
       <tr>
-        <td>Ondřej</td>
+        <td>1.FC Slovácko</td>
         <td class="loss">P</td>
         <td class="x">X</td>
         <td class="x">X</td>
@@ -434,25 +508,48 @@
 
 
   <!--STATISTIKY SEZONY-->
-  <section class="stats-section">
-  <h2>📊 Statistiky sezóny</h2>
+<section class="records-board">
+  <div class="stats-wrapper collapsed" id="statsWrapper">
+ 
+    <h2>📊 Statistiky sezóny</h2>
 
-  <div class="stats-grid">
-    <div class="stat-box">
-      <strong>Nejvíc gólů</strong>
-      <span>Jencek (18)</span>
-    </div>
-
-    <div class="stat-box">
-      <strong>Průměr gólů</strong>
-      <span>4.6 / zápas</span>
-    </div>
-
-    <div class="stat-box">
-      <strong>Clean sheets</strong>
-      <span>5</span>
-    </div>
+  <div class="record">
+    <span class="label">Nejvíce vstřelených gólů</span>
+    <span class="value">FC Barcelona</span>
+    <span class="number">11</span>
   </div>
+  <div class="record">
+      <span class="label">Nejvíce gólů v jednom zápase</span>
+      <span class="value">FCB 6:1 ŠKS; FCS 1:6 ACS</span>
+      <span class="number">7</span>
+    </div>
+  <div class="record">
+    <span class="label">Nejméňe obdržených gólů</span>
+    <span class="value">AC Sparta Praha</span>
+    <span class="number">1</span>
+  </div>
+  <div class="record">
+      <span class="label">Nejvíce inkasovaných gólů</span>
+      <span class="value">ŠK Slovan Bratislava; 1.FC Slovácko</span>
+      <span class="number">6</span>
+    </div>
+  <div class="record">
+    <span class="label">Nejvíce čistých kont</span>
+    <span class="value">X</span>
+    <span class="number">0</span>
+  </div>
+  <div class="record">
+    <span class="label">Nejdelší série výher</span>
+    <span class="value">FC Barcelona</span>
+    <span class="number">2</span>
+  </div>
+  <div class="record">
+    <span class="label">Nejrychlejší gól</span>
+    <span class="value">X</span>
+    <span class="number">X</span>
+  </div>
+</div>
+<button id="toggleStats">Zobrazit více</button>
 </section>
 
 
@@ -536,6 +633,22 @@
 <footer>&copy; 2025 1v1 Liga Hodonín - Svaz Malého Fotbalu - Všechna práva vyhrazena</footer>
 
 <script>
+  /*Statistiky*/
+const btn = document.getElementById("toggleStats");
+const wrapper = document.getElementById("statsWrapper");
+
+btn.addEventListener("click", () => {
+  wrapper.classList.toggle("collapsed");
+
+  if(wrapper.classList.contains("collapsed")){
+    btn.textContent = "Zobrazit více";
+  } else {
+    btn.textContent = "Zobrazit méně";
+  }
+});
+
+
+  /*Reporty*/
   const modal = document.getElementById("reportModal");
   const modalImg = document.getElementById("modalImg");
   const title = document.getElementById("modalTitle");
@@ -614,6 +727,9 @@ function showH2H(){
     h2hData[key1] || h2hData[key2] || "Zatím bez záznamu";
 }
   
+
+
+
 </script>
 
 </body>
