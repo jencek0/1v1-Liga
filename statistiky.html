@@ -6,6 +6,13 @@
 <title>1v1 Liga - Statistiky</title>
 <link rel="shortcut icon" href="images/1v1logo – upraveno.jpg" type="image/x-icon">
 <style>
+  html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 
   html {
       scrollbar-gutter: stable;
@@ -170,12 +177,108 @@ table tr:hover{
   grid-column: span 3;
 }
 
-/* RESPONSIVITA */
-@media (max-width: 600px){
-  .stats-grid{
-    grid-template-columns: 1fr;
+/* ================= DEFINITIVNÍ FIX RESPONZIVITY STATISTIK ================= */
+
+/* 1. Pojistka proti horizontálnímu scrollování */
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  /* 2. Zrušení fixních šířek u hlavních kontejnerů */
+  .container {
+    width: 95% !important;
+    max-width: 100vw !important;
+    margin: 10px auto !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 3. Tabulky pod sebe */
+  .stats-grid {
+    grid-template-columns: 1fr !important; /* Vynutí jeden sloupec */
+    gap: 20px !important;
+  }
+
+  /* 4. KLÍČOVÝ FIX: Zrušení fixní šířky 380px */
+  .table-container {
+    width: 100% !important; 
+    max-width: 100% !important;
+    min-width: 0 !important; /* Přebije případné min-width */
+    margin: 0 auto !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 5. Přizpůsobení samotné tabulky */
+  table {
+    width: 100% !important;
+    font-size: 14px !important;
+    table-layout: auto !important; /* Nechá prohlížeč dopočítat šířku */
+  }
+
+  th, td {
+    padding: 10px 5px !important;
+  }
+
+  /* 6. Navigace pro mobil */
+  .topnav {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 15px 5px;
+    gap: 10px;
+  }
+
+  .topnav a {
+    font-size: 16px;
+  }
+
+  h1 { font-size: 24px; }
+
+/* Tímto vynutíš, aby se absolutně vše v rámci body přizpůsobilo šířce displeje */
+* {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+}
+
+body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Zajištění, aby tabulky nepřetékaly */
+.table-container, table {
+    width: 100% !important;
+    display: block !important;
+    overflow-x: auto !important; /* Pokud bude tabulka široká, dovolí jen scrollovat v rámci tabulky, ne celé stránky */
+    white-space: nowrap;
+}
+
+/* Pokud se tabulky přesto řadí vedle sebe, vynuť pod sebe */
+.stats-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+}
+
+}
+
+/* Fix pro velmi malé telefony */
+@media (max-width: 400px) {
+  table {
+    font-size: 12px !important;
   }
 }
+
+
+
+
 
 /* Drobné efekty pro sérii a forma */
 .stat-section p b{
