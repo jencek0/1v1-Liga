@@ -6,6 +6,13 @@
     <title>1v1 Liga - Fotogalerie</title>
 
 <style>
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
     margin: 0;
     font-family: "Segoe UI", sans-serif;
@@ -168,6 +175,83 @@ body {
 .lightbox-info { margin-top: 15px; text-align: center; }
 #lightboxTitle { font-size: 18px; font-weight: bold; }
 #lightboxDate { font-size: 14px; color: #aaa; }
+
+/* ================= NOVÁ KOMPLETNÍ RESPONZIVITA PRO FOTOGALERII ================= */
+
+/* Globální fix proti horizontálnímu posunu */
+html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 850px) {
+    /* Navigace */
+    .topnav {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 10px 0;
+        gap: 10px;
+    }
+
+    .topnav a {
+        font-size: 16px;
+        padding: 5px 10px;
+    }
+
+    /* Nadpisy a filtry */
+    h1 { font-size: 26px; margin: 20px 0; }
+    
+    .filters {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    .filters select {
+        width: 100%; /* Filtry přes celou šířku */
+    }
+
+    /* Mřížka alb - pod sebe */
+    .gallery-grid {
+        grid-template-columns: 1fr !important;
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .album-card {
+        width: 100% !important;
+        margin: 0;
+    }
+
+    .album-img {
+        height: 200px;
+    }
+
+    /* LIGHTBOX (Prohlížeč fotek) */
+    .lightbox-content {
+        width: 95vw;
+        height: auto;
+        max-height: 80vh;
+    }
+
+    .lightbox img {
+        max-width: 100%;
+        max-height: 70vh;
+        object-fit: contain;
+    }
+
+    /* Ovládací šipky - zvětšíme pro dotyk a posuneme */
+    .arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+        background: rgba(0,0,0,0.5);
+
+
+
+
 </style>
 </head>
 <body>
