@@ -34,6 +34,12 @@
   <!-- 🔧 KONEC ČÁSTÍ PRO ÚPRAVU -->
 
   <style>
+    html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
     html {
       scrollbar-gutter: stable;
@@ -614,129 +620,142 @@
   gap: 14px;
 }
 
-
-
-
-
-/* 📱 RESPONSIVE DESIGN PRO MOBIL */
-/* --- Globální styl stránky --- */
-
-
-
-
-
-
-/* ================= RESPONZIVITA ================= */
-/* Malé obrazovky (mobil/tablet) */
-@media (max-width: 900px) {
-
-  /* --- Kontejner a panely --- */
+/* ================= NOVÁ KOMPLETNÍ RESPONZIVITA ================= */
+@media (max-width: 1024px) {
   .container {
+    width: 95%;
     flex-direction: column;
-    align-items: stretch;
-    width: 100%;
     margin: 20px auto;
-    gap: 15px;
   }
 
   .side-panel {
     width: 100%;
-    padding: 10px;
-    font-size: 14px;
+    box-sizing: border-box;
   }
 
-  main {
+  .hm-content {
+    grid-template-columns: 1fr;
+  }
+
+  .season-details {
     width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    overflow-x: auto; /* horizontální scroll pro tabulku */
   }
+}
 
-  /* --- Tabulka: zobrazení jen tým, rozdíl, body --- */
-  table{
-    max-width: 100%;
-  }
-  table th, table td {
-    display: none; /* skryj všechny */
-  }
-
-  table th:nth-child(2),
-  table th:nth-child(6),
-  table th:nth-child(7),
-  table td:nth-child(2),
-  table td:nth-child(6),
-  table td:nth-child(7) {
-    display: table-cell; /* zobraz jen tým, rozdíl, body */
-  }
-
-  /* --- Plán zápasů a grafika --- */
-  .plan-wrapper, .zapasy-wrapper {
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 12px;
-  }
-
- .zapasy-scroll img {
-    flex: 0 0 auto;
-    width: 100px;
+@media (max-width: 768px) {
+  /* Navigace */
+  .topnav {
     height: auto;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px 5px;
   }
-.plan-item{
-  width: 60px;
-  height: auto;
-}
+
+  .topnav a {
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+
+  /* Tabulka - zobrazení klíčových dat */
+  table th:nth-child(3), 
+  table th:nth-child(4), 
+  table th:nth-child(5),
+  table td:nth-child(3), 
+  table td:nth-child(4), 
+  table td:nth-child(5) {
+    display: none; /* Skryje odehrané, vstřelené a obdržené góly */
+  }
+
+  h1 { font-size: 24px; }
+
+  /* Slidery a Plán zápasů */
+  .plan-wrapper, .zapasy-wrapper {
+    width: 100%;
+    margin: 0;
+  }
+
+  .plan-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .plan-item {
+    min-width: 80%; /* Karty zaberou většinu displeje */
+  }
+
   .zapasy-scroll img {
-    max-height: 180px;
+    height: 150px;
   }
 
-  .plan-btn {
-    font-size: 24px;
-    padding: 8px 12px;
+  .arrow {
+    display: none; /* Na mobilu se scrolluje prstem */
   }
 
-  h1 { font-size: 20px; margin-bottom: 12px; }
-  h2 { font-size: 22px; }
-  h3 { font-size: 18px; }
+  /* Muzeum a Historie */
+  .history-header {
+    flex-direction: column;
+    text-align: center;
+  }
 
+  .history-tabs {
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 10px;
+    justify-content: flex-start;
+  }
 
-  /* Historie / muzeum */
-.hm-content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  .history-tabs button {
+    white-space: nowrap;
+  }
+
+  .hof-grid {
+    grid-template-columns: 1fr; /* Legendy pod sebou */
+  }
+
+  .mini-gallery-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 fotky vedle sebe */
+    max-height: none;
+    padding-right: 20px;
+  }
+
+  /* Legend panel (vyskakovací karta) */
+  .legend-panel {
+    width: 100%;
+    right: 0 !important;
+    bottom: 0;
+    top: auto;
+    height: 80vh;
+    border-radius: 20px 20px 0 0;
+    transition: transform 0.4s ease;
+    transform: translateY(100%);
+    opacity: 1;
+  }
+
+  .legend-panel.open {
+    transform: translateY(0);
+  }
+
+  /* Footer */
+  footer {
+    padding: 15px;
+    font-size: 0.8rem;
+  }
 }
 
-.hm-left, .hm-right {
-  width: 100%;
-}
+/* Optimalizace pro velmi malé telefony */
+@media (max-width: 480px) {
+  .mini-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .h1zapasy {
+    font-size: 30px;
+  }
 
-.hof-grid {
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-}
-
-/* Mini gallery */
-.mini-gallery-grid {
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  max-height: none;
-  overflow-y: visible;
-}
-
-.mini-gallery-grid img {
-  width: 100%;
-  height: auto;
-}
-
-/* Legend panel */
-.legend-panel {
-  position: fixed;
-  right: 5%;
-  width: 90%;
-  max-width: 400px;
-  height: auto;
-  top: 40px;
-  opacity: 1;
-  pointer-events: auto;
-}
+  .season-panel {
+    padding: 15px;
+  }
 }
 
 /* --- Extra drobnosti pro čistý mobil --- */
