@@ -3,9 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Novinky - 1v1 Liga</title>
+  <title>1v1 Liga - Novinky</title>
   <link rel="shortcut icon" href="images/1v1logo – upraveno.jpg" type="image/x-icon">
   <style>
+
+    html {
+      scrollbar-gutter: stable;
+    }
+
+    .topnav{
+      width: 100%;
+      background: linear-gradient(135deg, #0f4775, #183b5f);
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      border-bottom: 4px solid #da57b2;
+      font-size: 20px;
+      padding: 20px 0px;
+    }
+
+    .topnav a{
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .topnav a:hover{
+      color: #00bfff;
+    }
+    .topnav a.active{
+      color: #00bfff;
+    }
+
+    .season-switch {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .season-switch button {
+      display: inline-block;
+      margin: 10px 5px;
+      padding:10px 22px;
+      border:none;
+      border-radius:12px;
+      background:linear-gradient(135deg,#4da3ff,#1e6bd6);
+      color:#000000;
+      font-weight:700;
+      font-size:15px;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(77,163,255,.35);
+      transition:all .25s ease;
+    }
+
+    .season-switch button:hover {
+      transform:translateY(-2px);
+      box-shadow:0 10px 25px rgba(77,163,255,.5);
+    }
+
+    .season-switch button.active {
+      background: #00bfff;
+      color: black;
+    }
+
+
     body {
       font-family: "Segoe UI", sans-serif;
       margin: 0;
@@ -83,10 +147,23 @@ main {
   </style>
 </head>
 <body>
+  <!--Navigace-->
+  <nav class="topnav">
+  <a href="index.html" >Tabulka</a>
+  <a href="zapasy.html">Zápasy</a>
+  <a href="novinky.html"class="active">Novinky</a>
+  <a href="statistiky.html">Statistiky</a>
+  <a href="fotogalerie.html">Fotogalerie</a>
+</nav>
   <header>
     <h1>🗞️ Novinky 1v1 Ligy</h1>
     <a href="index.html">← Zpět na hlavní stránku</a>
   </header>
+
+  <div class="season-switch">
+  <button onclick="changeSeason('2025/26')" class="active">2025/26</button>
+  <button onclick="changeSeason('2025')">2025</button>
+  </div>
 
   <main>
     <div id="allNews"></div>
@@ -95,11 +172,15 @@ main {
   <script src="news.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+let currentSeason = "2025/26";
 
+function renderNews(){
   const container = document.getElementById("allNews");
+  container.innerHTML = "";
 
-  newsData.forEach(n => {
+  const filtered = newsData.filter(n => n.season === currentSeason);
+
+  filtered.forEach(n => {
     container.innerHTML += `
       <div class="news-entry">
         <div class="news-date">${n.date}</div>
@@ -108,8 +189,22 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
   });
+}
 
-});
+function changeSeason(season){
+  currentSeason = season;
+
+  document.querySelectorAll(".season-switch button").forEach(btn => {
+    btn.classList.remove("active");
+    if(btn.textContent === season){
+      btn.classList.add("active");
+    }
+  });
+
+  renderNews();
+}
+
+document.addEventListener("DOMContentLoaded", renderNews);
 </script>
 
 
