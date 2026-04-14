@@ -4,18 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>1v1 Liga - Oficiální web</title>
-  <link rel="shortcut icon" href="images/1v1logo – upraveno.jpg" type="image/x-icon">
+  <link rel="shortcut icon" href="images/1v1logo – upraveno.jpg" type="image/x-icon" alt="foto">
   <!-- 🔝🔧 SEKCE 1: TABULKA (týmy, góly, body) -->
-  <script>
-    const teamsData = [
-      { team: "1.FC Slovácko", matchesplayed: 1, goalsFor: 1, goalsAgainst: 6, points: 0 },
-      { team: "FC Barcelona", matchesplayed: 2, goalsFor: 11, goalsAgainst: 2, points: 6 },
-      { team: "ŠK Slovan Bratislava", matchesplayed: 1, goalsFor: 1, goalsAgainst: 6, points: 0 },
-      { team: "AC Sparta Praha", matchesplayed: 1, goalsFor: 6, goalsAgainst: 1, points: 3 },
-      { team: "FK Hodonín", matchesplayed: 1, goalsFor: 1, goalsAgainst: 5, points: 0 }
-    ];
-  </script>
-
+  <script src="data.js"></script>
+  <!--SEKCE NEJBLIZSICH ZAPASU-->
+  <script src="matches.js"></script>
   <!-- 🔧 SEKCE 2: OBSAH LEVÉHO PANELU -->
   
 
@@ -24,14 +17,14 @@
     const rightPanelContent = `
       <h2>ℹ️ Informace</h2>
       <p><strong>Počet kol odehraných: 1</strong></p>
-      <p><em>Další zápas: 11. dubna –<br> ŠK Slovan Bratislava vs. 1.FC Slovácko</em></p>
+      <p id="nextMatch"><em>Načítám zápas...</em></p>
       <p><strong>Soutěže pod správou svazu:</strong></p>
       <ul>
         <li>1v1 Liga Hodonín</li>
         <li>Liga Národů</li>
         <li>Super Cup</li>
       </ul>
-      <img src="images/svaz1v1logofinal.png" alt="Logo svazu" style="width:70%; border-radius:1px; margin-top:10px;">
+      <img src="images/logosvazu.png" alt="Logo svazu" style="width:70%; border-radius:1px; margin-top:10px;">
       
     `;
 
@@ -41,11 +34,47 @@
   <!-- 🔧 KONEC ČÁSTÍ PRO ÚPRAVU -->
 
   <style>
+
+    html {
+      scrollbar-gutter: stable;
+    }
+
+    .topnav{
+  width: 100%;
+  background: linear-gradient(360deg, #103861, #09233d);
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 4px solid #da57b2;
+  font-size: 20px;
+  padding: 20px 0px;
+  height: 47px;
+  padding: 10px 0;
+}
+
+.topnav a{
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.2s; 
+  padding-top: 10px;
+}
+
+.topnav a:hover{
+  color: #00bfff;
+}
+.topnav a.active{
+  color: #00bfff;
+}
+
     /* 🎨 --- STYL STRÁNKY --- */
     body {
       font-family: "Segoe UI", sans-serif;
       background: linear-gradient(135deg, #e2ebf0, #cfd9df);
-      background-image: url(images/pozadi-rozpis.png); 
+      background-image: url(images/rozpis-pozadi.png); 
       margin: 0;
       padding: 0;
       background-position: top;
@@ -142,19 +171,152 @@
     tbody tr:nth-child(2):hover { background-color: #cfcfcf; } 
     tbody tr:nth-child(3):hover { background-color: #dac39a; }
 
-    @media (max-width: 900px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-      }
-      .side-panel {
-        width: 90%;
-      }
-      main {
-        width: 90%;
-      }
-    }
     
+    
+
+/* --- BLOK ZÁPASY - finální styl --- */
+.h1zapasy {
+  font-size: 50px;
+  margin-top: 1px;
+}
+
+#todayMatchBanner {
+  background: red;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: none;
+  animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+  from { opacity: 1; }
+  to { opacity: 0.6; }
+}
+
+#zapasy {
+  background: linear-gradient(30deg, #7192b4, #09233d);
+  text-align: center;
+  padding: 50px 0;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.zapasy-section h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.zapasy-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.zapasy-scroll {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px 0;
+}
+
+.zapasy-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.zapasy-scroll img {
+  height: 220px;
+  margin-left: -60px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: brightness(0.85);
+}
+
+.zapasy-scroll img:first-child {
+  margin-left: 0;
+}
+
+.zapasy-scroll img:hover {
+  transform: scale(1.25);
+  filter: brightness(1);
+  z-index: 2;
+}
+
+.zapasy-card {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 140px;
+  transition: transform 0.3s ease, z-index 0s;
+  border-radius: 10px;
+  position: relative;
+}
+
+/* Šipky */
+.arrow {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9999;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background 0.3s;
+}
+
+.arrow:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.arrow.left {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  z-index: 9999; /* ne 20, ne 90 → opravdu 9999 */
+}
+
+.arrow.right {
+  right: 10px;
+  z-index: 9999;
+}
+
+
+/* Fade efekty */
+.fade {
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.right-fade {
+  right: 0;
+  background: linear-gradient(to left, rgb(25, 54, 83), rgba(27, 88, 150, 0));
+  border-radius: 20px;
+}
+.top-right-fade {
+  right: 0;
+  background: linear-gradient(to left, rgb(42, 69, 97), rgba(27, 88, 150, 0));
+  border-radius: 20px;
+}
+
 
 /* ===== Historie / Muzeum (S3) ===== */
 .celemuzeum {
@@ -381,16 +543,7 @@
   transform: scale(4) center;
   box-shadow: 0 12px 30px rgba(0,0,0,0.45);  }
 
-/* responsive */
-@media (max-width: 980px) {
-  .hm-content { grid-template-columns: 1fr; }
-  .hof-grid { grid-template-columns: repeat(3, 1fr); }
-  .legend-panel { right: -100%; width: 96%; left: 2%; top: 60px; }
-}
-@media (max-width: 640px) {
-  .hof-grid { grid-template-columns: repeat(2, 1fr); }
-  .mini-gallery img { width:80px; height:60px; }
-}
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -466,191 +619,137 @@
 
 
 /* 📱 RESPONSIVE DESIGN PRO MOBIL */
+/* --- Globální styl stránky --- */
+
+
+
+
+
+
+/* ================= RESPONZIVITA ================= */
+/* Malé obrazovky (mobil/tablet) */
 @media (max-width: 900px) {
-  /* Změní rozložení na svislé (panely nad a pod tabulkou) */
+
+  /* --- Kontejner a panely --- */
   .container {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
-    gap: 20px;
+    margin: 20px auto;
+    gap: 15px;
   }
 
   .side-panel {
-    width: 95%;
-    order: 1; /* levý panel nahoře */
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
   }
 
   main {
-    width: 95%;
-    order: 2;
-    overflow-x: auto; /* umožní posouvat tabulku, když je moc široká */
-  }
-
-  .right {
-    order: 3; /* pravý panel dole */
-  }
-
-  /* Tabulka se nebude rozbíjet, ale bude se posouvat do strany */
-  table {
+    width: 100%;
+    padding: 10px;
     font-size: 14px;
-    min-width: 600px; /* nechá tabulku čitelnou */
-    border: 2px solid #0078d7;
+    overflow-x: auto; /* horizontální scroll pro tabulku */
   }
 
-  th, td {
-    padding: 8px;
+  /* --- Tabulka: zobrazení jen tým, rozdíl, body --- */
+  table{
+    max-width: 100%;
+  }
+  table th, table td {
+    display: none; /* skryj všechny */
   }
 
-  h1 {
-    font-size: 22px;
-  }
-  .celemuzeum {
-    width: 200%;
-  }
-}
-
-/* 📱 Ještě menší obrazovky (do 600px) */
-@media (max-width: 600px) {
-  .museum-grid {
-    grid-template-columns: 1fr; /* každá karta na samostatném řádku */
+  table th:nth-child(2),
+  table th:nth-child(6),
+  table th:nth-child(7),
+  table td:nth-child(2),
+  table td:nth-child(6),
+  table td:nth-child(7) {
+    display: table-cell; /* zobraz jen tým, rozdíl, body */
   }
 
-  .card {
-    width: 90%;
+  /* --- Plán zápasů a grafika --- */
+  .plan-wrapper, .zapasy-wrapper {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 12px;
+  }
+
+ .zapasy-scroll img {
+    flex: 0 0 auto;
+    width: 100px;
     height: auto;
   }
-
-  .side-panel {
-    font-size: 14px;
+.plan-item{
+  width: 60px;
+  height: auto;
+}
+  .zapasy-scroll img {
+    max-height: 180px;
   }
-  .celemuzeum {
-    width: 200%;
+
+  .plan-btn {
+    font-size: 24px;
+    padding: 8px 12px;
   }
-}
 
-/* --- BLOK ZÁPASY - finální styl --- */
-.h1zapasy {
-  font-size: 50px;
-  margin-top: 1px;
-}
-#zapasy {
-  background: linear-gradient(135deg, #7192b4, #09233d);
-  text-align: center;
-  padding: 50px 0;
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
+  h1 { font-size: 20px; margin-bottom: 12px; }
+  h2 { font-size: 22px; }
+  h3 { font-size: 18px; }
 
-.zapasy-section h3 {
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-}
 
-.zapasy-wrapper {
-  position: relative;
+  /* Historie / muzeum */
+.hm-content {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  max-width: 1200px;
-  margin: 0 auto;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.zapasy-scroll {
-  display: flex;
-  gap: 0;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 20px 0;
+.hm-left, .hm-right {
+  width: 100%;
 }
 
-.zapasy-scroll::-webkit-scrollbar {
-  display: none;
+.hof-grid {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
 }
 
-.zapasy-scroll img {
-  height: 220px;
-  margin-left: -60px;
-  border-radius: 10px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  filter: brightness(0.85);
+/* Mini gallery */
+.mini-gallery-grid {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  max-height: none;
+  overflow-y: visible;
 }
 
-.zapasy-scroll img:first-child {
-  margin-left: 0;
+.mini-gallery-grid img {
+  width: 100%;
+  height: auto;
 }
 
-.zapasy-scroll img:hover {
-  transform: scale(1.25);
-  filter: brightness(1);
-  z-index: 2;
-}
-
-.zapasy-card {
-  flex: 0 0 auto;
-  width: 220px;
-  height: 140px;
-  transition: transform 0.3s ease, z-index 0s;
-  border-radius: 10px;
-  position: relative;
-}
-
-/* Šipky */
-.arrow {
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  color: white;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 9999;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: background 0.3s;
-}
-
-.arrow:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.arrow.left {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+/* Legend panel */
+.legend-panel {
+  position: fixed;
+  right: 5%;
+  width: 90%;
+  max-width: 400px;
+  height: auto;
+  top: 40px;
+  opacity: 1;
   pointer-events: auto;
-  z-index: 9999; /* ne 20, ne 90 → opravdu 9999 */
+}
 }
 
-.arrow.right {
-  right: 10px;
-  z-index: 9999;
+/* --- Extra drobnosti pro čistý mobil --- */
+.zapasy-scroll, .plan-container {
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
 }
 
-/* Fade efekty */
-.fade {
-  position: absolute;
-  top: 0;
-  width: 120px;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
+.zapasy-scroll img:hover, .plan-item:hover {
+  transform: scale(1.1);
 }
 
-.right-fade {
-  right: 0;
-  background: linear-gradient(to left, rgb(25, 54, 83), rgba(27, 88, 150, 0));
-  border-radius: 20px;
-}
-.top-right-fade {
-  right: 0;
-  background: linear-gradient(to left, rgb(42, 69, 97), rgba(27, 88, 150, 0));
-  border-radius: 20px;
-}
+
 
 /* MINI-GALLERY (3x4, scroll down, no arrows) */
 .mini-gallery-grid {
@@ -789,8 +888,19 @@
   </style>
 </head>
 
-<!-- TABULKA -->
+
 <body>
+<!--Navigace-->
+  <nav class="topnav">
+  <a href="index.html" class="active">Tabulka</a>
+  <a href="zapasy.html">Zápasy</a>
+  <a href="novinky.html">Novinky</a>
+  <a href="statistiky.html">Statistiky</a>
+  <a href="fotogalerie.html">Fotogalerie</a>
+</nav>
+
+
+  <!-- TABULKA -->
   <div class="container">
     <aside class="side-panel left" id="leftPanel"></aside>
 
@@ -819,6 +929,8 @@
 <section id="zapasy">
   <h1 class="h1zapasy">Zápasy</h1>
 
+<div id="todayMatchBanner"></div>
+
   <section class="plan-zapasu">
     <h2>Plán zápasů</h2>
 
@@ -826,40 +938,7 @@
         <button class="plan-btn left" onclick="movePlan(-1)">&#10094;</button>
 
         <div class="plan-container" id="planContainer">
-            <div class="plan-item">
-                <h3>ŠK Slovan Bratislava vs. 1.FC Slovácko</h3>
-                <p>11. dubna</p>
-            </div>
-
-            <div class="plan-item">
-                <h3>AC Sparta Praha vs. ŠK Slovan Bratislava</h3>
-                <p>11. dubna</p>
-            </div>
-
-            <div class="plan-item">
-                <h3>1.FC Slovácko vs. FK Hodonín</h3>
-                <p>11. dubna</p>
-            </div>
-
-            <div class="plan-item">
-                <h3>FC Barcelona vs. 1.FC Slovácko</h3>
-                <p>11. dubna</p>
-            </div>
-
-            <div class="plan-item">
-                <h3>FK Hodonín vs. AC Sparta Praha</h3>
-                <p>Datum neurčeno</p>
-            </div>
-
-            <div class="plan-item">
-                <h3>ŠK Slovan Bratislava vs. FK Hodonín</h3>
-                <p>Datum neurčeno</p>
-            </div>
-
-            <div class="plan-item">
-                <h3>AC Sparta Praha vs. FC Barcelona</h3>
-                <p>Datum neurčeno</p>
-            </div>
+            
         </div>
 
         <button class="plan-btn right" onclick="movePlan(1)">&#10095;</button>
@@ -872,28 +951,23 @@
     <div class="zapasy-wrapper">
       <button class="arrow left">❮</button>
       <div class="zapasy-scroll">
-        <img src="images/golsezony.png" alt="foto">
-        <img src="images/autista4.jpg" alt="foto">
-        <img src="images/hracsezony.png" alt="foto">
-        <img src="images/jencek3.jpg" alt="foto">
-        <img src="images/vysledky1.png" alt="Výsledek 1">
-        <img src="images/matchday1.png" alt="Rozpis 1">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
-        <img src="images/rozpis1.png" alt="Rozpis 2">
+        <img src="images/graf-minigal/graf-ssk-fcb.png" alt="foto">
+        <img src="images/graf-minigal/graf-fcb-fcs.png" alt="foto">
+        <img src="images/graf-minigal/graf-ssk-fcs.png" alt="foto">
+        <img src="images/graf-minigal/golsezony.png" alt="foto">
+        <img src="images/graf-minigal/autista4.jpg" alt="foto">
+        <img src="images/graf-minigal/hracsezony.png" alt="foto">
+        <img src="images/graf-minigal/jencek3.jpg" alt="foto">
+        <img src="images/graf-minigal/vysledky1.png" alt="Výsledek 1">
+        <img src="images/graf-minigal/matchday1.png" alt="Rozpis 1">
+        <img src="images/graf-minigal/rozpis1.png" alt="Rozpis 2">
+
+        
       </div>
       <button class="arrow right">❯</button>
-      <div class="fade right-fade"></div>
     </div>
   </div>
-  <a href="zapasy.html" style="display:inline-block; margin-top:10px; color:#0078d7; font-weight:bold; text-decoration:none; font-size: 23px;">
+  <a href="zapasy.html" style="display:inline-block; margin-top:10px; color:#ffffff; font-weight:bold; text-decoration:none; font-size: 23px; box-shadow:0 10px 25px rgba(7, 127, 255, 0.5);">
       ➤ Další Zápasy
     </a>
 </section>
@@ -925,7 +999,7 @@
           <li>Nejvíce žlutých karet v kariéře: Šašek a Ondřej (3)</li>
           <li>Nejvíce ocenění hráče dne: Jencek, Ondřej a Šašek (1)</li>
           <li>Nejrychlejší gól: Šašek (0:08,02)</li>
-          <li>Nejvíc vyhraných zápasů v řadě (pouze v lize): Jencek (7)</li>
+          <li>Nejvíc vyhraných zápasů v řadě (pouze v lize): Jencek (9)</li>
           <li>Nejvíce čistých kont: Autista, Kika a Jencek (1)</li>
           </ul>
         </div>
@@ -941,17 +1015,14 @@
         <section class="gallery-section">
         <h3>Fotogalerie</h3>
            <div class="mini-gallery-grid" id="miniGallery">
-            <img src="images/autista3.jpg" alt="foto" class="gal-img" data-caption="<cite>18.10.2025 - Ondřej během prvního hracího dne sezóny 2025/26</cite>">
-            <img src="images/autista2.jpg" alt="foto" class="gal-img" data-caption="<cite>Vzkaz pro Šaška před jeho ukončením kariéry, předáván Ondřejem</cite>">
-            <img src="images/pohar.jpg" alt="foto" class="gal-img" data-caption="<cite>Putovní pohár pro vítěze ligy</cite>">
-            <img src="images/jencek.jpg" alt="foto" class="gal-img" data-caption="<cite>Jencek - vítěž první sezóny (2025)</cite>">
-            <img src="images/autista1.jpg" alt="foto" class="gal-img" data-caption="<cite>Ondřej s medailí za druhé místo - sezóna 2025</cite>">
-            <img src="images/kikaautista.jpg" alt="foto" class="gal-img" data-caption="<cite>26.8.2025 - Zápas mezi TJ Baník Brodské a Gurt Yo</cite>">
-            <img src="images/sasek.jpg" alt="foto" class="gal-img" data-caption="<cite>13.7.2025 - Šašek hráčem 3. hracího dne první sezóny</cite>">
-            <img src="images/jencek2.jpg" alt="foto" class="gal-img" data-caption="<cite>13.7.2025 - Jencek v zápase proti Polským Špačkům</cite>">
-            <img src="images/1zapas.jpg" alt="foto" class="gal-img" data-caption="<cite>22.6.2025 - Zápas mezi FC Sudí Podplacen a Gurt Yo</cite>"> 
-            <img src="images/kika1.jpg" alt="foto" class="gal-img" data-caption="<cite>22.6.2025 - Zápas mezi týmy FC Sudí Podplacen a TJ Baník Brodské</cite>">
-             
+            <img src="images/graf-minigal/autista3.jpg" alt="foto" class="gal-img" data-caption="<cite>18.10.2025 - Ondřej během prvního hracího dne sezóny 2025/26</cite>">
+            <img src="images/graf-minigal/autista2.jpg" alt="foto" class="gal-img" data-caption="<cite>Vzkaz pro Šaška před jeho ukončením kariéry, předáván Ondřejem</cite>">
+            <img src="images/graf-minigal/pohar.jpg" alt="foto" class="gal-img" data-caption="<cite>Putovní pohár pro vítěze ligy</cite>">
+            <img src="images/graf-minigal/jencek.jpg" alt="foto" class="gal-img" data-caption="<cite>Jencek - vítěž první sezóny (2025)</cite>">
+            <img src="images/graf-minigal/autista1.jpg" alt="foto" class="gal-img" data-caption="<cite>Ondřej s medailí za druhé místo - sezóna 2025</cite>">
+            <img src="images/graf-minigal/sasek.jpg" alt="foto" class="gal-img" data-caption="<cite>13.7.2025 - Šašek hráčem 3. hracího dne první sezóny</cite>">
+            <img src="images/graf-minigal/1zapas.jpg" alt="foto" class="gal-img" data-caption="<cite>22.6.2025 - Historicky 1. zápas 1v1 Ligy mezi FC Sudí Podplacen a Gurt Yo</cite>">  
+            <img src="images/graf-minigal/supercup.jpg" alt="foto" class="gal-img" data-caption="<cite>13.8.2025 - Pája - vítěz prvního ročníku supercupu</cite>">            
            </div>
       </section>
 
@@ -1000,11 +1071,135 @@
 
     // 📰 Naplnění postranních panelů
     
-    document.querySelector("#rightPanel").innerHTML = rightPanelContent;
+// 1️⃣ FUNKCE NAHOŘE
+function getNextMatch() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-    renderTable();
-    
-    
+  const future = [];
+  const noDate = [];
+
+  matchesData.forEach(m => {
+    // zápasy bez data
+    if (!m.date) {
+      noDate.push(m);
+      return;
+    }
+
+    const d = new Date(m.date);
+
+    // pokud je datum neplatné, ignoruj
+    if (isNaN(d)) return;
+
+    d.setHours(0, 0, 0, 0);
+
+    // 👉 dnešní i budoucí zápasy
+    if (d >= today) {
+      future.push({ ...m, dateObj: d });
+    }
+  });
+
+  // 🔥 1. priorita: nejbližší dnešní / budoucí zápas
+  if (future.length > 0) {
+    future.sort((a, b) => a.dateObj - b.dateObj);
+    return future[0];
+  }
+
+  // 🔥 2. fallback: zápasy bez data
+  if (noDate.length > 0) {
+    return noDate[0];
+  }
+
+  return null;
+}
+
+
+// 2️⃣ vložení pravého panelu
+document.querySelector("#rightPanel").innerHTML = rightPanelContent;
+
+
+// 3️⃣ render tabulky
+renderTable();
+
+
+// 4️⃣ zobrazení dalšího zápasu
+const next = getNextMatch();
+
+if (next) {
+  let formattedDate = "Datum bude upřesněno";
+
+  if (next.date) {
+    const d = new Date(next.date);
+
+    if (!isNaN(d)) {
+      formattedDate = d.toLocaleDateString("cs-CZ", {
+        day: "numeric",
+        month: "long"
+      });
+    }
+  }
+
+  document.getElementById("nextMatch").innerHTML =
+    `<em>Další zápas: ${formattedDate} –<br>${next.team1} vs. ${next.team2}</em>`;
+}
+
+
+//"dnes se hraje" hlaska
+function checkTodayMatch() {
+  const today = new Date().toISOString().split("T")[0];
+
+  const todayMatch = matchesData.find(m => m.date === today);
+
+  if (todayMatch) {
+    const el = document.getElementById("todayMatchBanner");
+    if (el) {
+      el.style.display = "block";
+      el.innerHTML = `🔥 DNES SE HRAJE: ${todayMatch.team1} vs. ${todayMatch.team2}`;
+    }
+  }
+}
+
+checkTodayMatch();
+
+
+//NAPLNENI SEKCE ZAPASY
+// funkce pro zobrazení zápasů ve slideru
+function renderMatches() {
+  const container = document.getElementById("planContainer");
+  container.innerHTML = "";
+  const today = new Date();
+  today.setHours(0,0,0,0); // ignorujeme čas, porovnáváme jen datum
+  matchesData.forEach(match => {
+    // filtrujeme odehrané zápasy (datum menší než dnes)
+    if (match.date) {
+      const matchDate = new Date(match.date);
+      matchDate.setHours(0,0,0,0);
+      if (matchDate < today) return; // přeskočíme staré zápasy
+    }
+    const div = document.createElement("div");
+    div.className = "plan-item";
+    // pokud je datum null, zobrazíme "Datum neurčeno"
+    let dateText;
+    if (match.date) {
+      const d = new Date(match.date);
+      if (!isNaN(d)) {
+        dateText = d.toLocaleDateString("cs-CZ", { day: "numeric", month: "long" });
+      } else {
+        dateText = "Datum neurčeno";
+      }
+    } else {
+      dateText = "Datum neurčeno";
+    }
+    div.innerHTML = `
+      <h3>${match.team1} vs. ${match.team2}</h3>
+      <p>${dateText}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+// spustíme render hned po načtení
+renderMatches();
+
 // 🎞️ Posouvání obrázků v sekci Zápasy
 document.querySelectorAll(".zapasy-section").forEach(section => {
   const scrollContainer = section.querySelector(".zapasy-scroll");
@@ -1044,7 +1239,7 @@ const seasonsData = [
     summary: "Druhá sezóna. 2 nováčci, chybí Šašek. 5 týmů.",
     items: [
       { title: "Vítěz:", text: "Zatím neznámý" },
-      { title: "Nejlepší střelec: <br>Nejméně <br>obdržených gólů:", text: "Jencek - 12<br><br> --- - ---" }, 
+      { title: "Nejlepší střelec: <br>Nejméně <br>obdržených gólů:", text: "Jencek - 23<br><br> Pája - 1" }, 
       { title: "Žluté karty:", text: "Lily - 1" }
     ],
     
@@ -1058,7 +1253,7 @@ const seasonsData = [
 const legendsData = [
   { id:"l1", 
   name:"Šašek", 
-  img:"images/sasek.jpg", 
+  img:"images/graf-minigal/sasek.jpg", 
   bio:"Legenda ligy, 1 sezóna, 23 gólů. Do druhé sezóny bohužel nenastoupil. ", 
   stats: {
       goals: 23,
@@ -1071,11 +1266,11 @@ const legendsData = [
 
   { id:"l2", 
   name:"Jencek", 
-  img:"images/jencek2.jpg", 
+  img:"images/graf-minigal/jencek2.jpg", 
   bio:"Vítěz první sezóny, ve které nastřílel 70 gólů.", 
   stats: {
-      goals: 81,
-      goalsAgainst: 37,
+      goals: 93,
+      goalsAgainst: 45,
       cleanSheets: 1,
       yellowCards: 1,
       titles: "1"
@@ -1084,11 +1279,11 @@ const legendsData = [
 
   { id:"l3", 
   name:"Autista", 
-  img:"images/autista1.jpg", 
+  img:"images/graf-minigal/autista1.jpg", 
   bio:"Útočná legenda s Brazilskými kořeny, 2. místo v první sezóně.", 
   stats: {
-      goals: 41,
-      goalsAgainst: 53,
+      goals: 50,
+      goalsAgainst: 62,
       cleanSheets: 1,
       yellowCards: 3,
       titles: "0"
@@ -1097,11 +1292,11 @@ const legendsData = [
 
   { id:"l4", 
   name:"Kika", 
-  img:"images/kika1.jpg", 
+  img:"images/graf-minigal/kika1.jpg", 
   bio:"Český Araujo, nejlepší obrana díky které v první sezóně obdržela pouze 32 branek.",
   stats: {
-      goals: 37,
-      goalsAgainst: 38,
+      goals: 48,
+      goalsAgainst: 47,
       cleanSheets: 1,
       yellowCards: 0,
       titles: "0"
@@ -1317,7 +1512,7 @@ document.addEventListener("DOMContentLoaded", () => {
       ➤ Další novinky
     </a>
 
-    <img src="images/1v1logo – upraveno.jpg" style="width:70%; margin-top:10px;">
+    <img src="images/1v1logo – upraveno.jpg" style="width:70%; margin-top:10px; alt="foto"">
   `;
 
   // vezme poslední 2 novinky
