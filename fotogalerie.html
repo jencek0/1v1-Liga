@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1v1 Liga - Fotogalerie</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #0c1b2e, #0f2744);
+    color: #eaf3ff;
+}
+
+/* NAV */
+.topnav {
+    width: 100%;
+    background: linear-gradient(360deg, #103861, #09233d);
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 4px solid #da57b2;
+    font-size: 20px;
+    padding: 10px 0;
+    height: 47px;
+}
+
+.topnav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+    padding-top: 10px;
+}
+
+.topnav a:hover, .topnav a.active {
+    color: #00bfff;
+}
+
+/* FILTRY */
+.gallery-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.gallery-controls select {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    background-color: rgb(78, 110, 255);
+    color: white;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 35px;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+/* GALERIE */
+.gallery {
+    max-width: 1200px;
+    margin: 0 auto 40px;
+    display: grid;
+    /* Oprava velikosti: nastavíme pevnější mřížku */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.photo {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #09233d;
+    height: 200px; /* Pevná výška kontejneru */
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Toto zajistí, že všechny fotky budou stejně velké a oříznuté */
+    display: block;
+    transition: .3s;
+}
+
+.photo:hover img {
+    transform: scale(1.08);
+}
+
+.photo-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+
+/* LIGHTBOX */
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.95);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.lightbox.open { display: flex; }
+
+
+
+.lightbox img#lightboxImg {
+  width: 80vw;         /* Vynutí šířku na 80 % šířky obrazovky */
+  height: 70vh;        /* Vynutí výšku na 70 % výšky obrazovky */
+  object-fit: contain; /* Roztáhne obrázek na tyhle rozměry, ale NEZDEFORMUJE ho */
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.thumbnail-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 80%;
+}
+
+.thumbnail-container img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.4;
+    border-radius: 4px;
+    transition: 0.2s;
+    border: 2px solid transparent;
+}
+
+.thumbnail-container img:hover { opacity: 0.7; }
+
+.thumbnail-container img.active {
+    opacity: 1;
+    border-color: #00bfff;
+}
+
+.close { position: absolute; top: 20px; right: 30px; font-size: 40px; cursor: pointer; color: white; }
+.arrow { position: absolute; top: 50%; transform: translateY(-50%); font-size: 50px; cursor: pointer; color: white; user-select: none; padding: 20px; }
+.left { left: 10px; }
+.right { right: 10px; }
+
+.lightbox-info { margin-top: 15px; text-align: center; }
+#lightboxTitle { font-size: 18px; font-weight: bold; }
+#lightboxDate { font-size: 14px; color: #aaa; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+    <a href="index.html">Tabulka</a>
+    <a href="zapasy.html">Zápasy</a>
+    <a href="novinky.html">Novinky</a>
+    <a href="statistiky.html">Statistiky</a>
+    <a href="fotogalerie.html" class="active">Fotogalerie</a>
+</nav>
+
+<div class="gallery-controls">
+    <select id="seasonFilter">
+        <option value="all">Všechny sezóny</option>
+        <option value="2025/26">2025/26</option>
+        <option value="2025">2025</option>
+    </select>
+    <select id="teamFilter">
+        <option value="all">Všechny týmy</option>
+        <option>FC Barcelona</option>
+        <option>FK Hodonín</option>
+        <option>AC Sparta Praha</option>
+        <option>1.FC Slovácko</option>
+        <option>ŠK Slovan Bratislava</option>
+        <option>FC Sudí Podplacen</option>
+        <option>Gurt Yo</option>
+        <option>TJ Baník Brodské</option>
+        <option>Polští Špačci</option>
+    </select>
+</div>
+
+<div id="gallery" class="gallery"></div>
+
+<div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <span class="arrow left">&#10094;</span>
+    <img id="lightboxImg">
+    <span class="arrow right">&#10095;</span>
+
+    <div class="lightbox-info">
+        <div id="lightboxTitle"></div>
+        <div id="lightboxDate"></div>
+    </div>
+    <div id="thumbBox" class="thumbnail-container"></div>
+</div>
+
+<script src="photos.js"></script>
+
+<script>
+let currentIndex = 0;
+let currentPhotos = [];
+let currentAlbum = null; // Pomocná proměnná pro šipky
+
+function renderGallery() {
+    const season = document.getElementById("seasonFilter").value;
+    const team = document.getElementById("teamFilter").value;
+    const container = document.getElementById("gallery");
+
+    container.innerHTML = "";
+
+    // Filtrování dat (ujisti se, že v photos.js máš všude "photos")
+    const filtered = photosData.filter(p => {
+        const s = season === "all" || p.season === season;
+        const t = team === "all" || (p.teams && p.teams.includes(team));
+        return s && t;
+    });
+
+    filtered.forEach((album) => {
+        const div = document.createElement("div");
+        div.classList.add("photo");
+
+        div.innerHTML = `
+            <img src="${album.photos[0]}" alt="${album.match}">
+            <div class="photo-title">
+                ${album.match}<br>
+                <small>${album.date || ''}</small>
+            </div>
+        `;
+
+        div.addEventListener("click", () => {
+            currentPhotos = album.photos;
+            currentAlbum = album; // Uložíme si celé album
+            currentIndex = 0;
+            openLightbox();
+        });
+
+        container.appendChild(div);
+    });
+}
+
+function openLightbox() {
+    if (!currentAlbum) return;
+
+    const lb = document.getElementById("lightbox");
+    const img = document.getElementById("lightboxImg");
+    const thumbBox = document.getElementById("thumbBox");
+    
+    // Nastavení hlavní fotky a textů
+    img.src = currentPhotos[currentIndex];
+    document.getElementById("lightboxTitle").textContent = currentAlbum.match;
+    document.getElementById("lightboxDate").textContent = currentAlbum.date || "";
+
+    // Vygenerování miniatur
+    thumbBox.innerHTML = "";
+    currentPhotos.forEach((src, idx) => {
+        const thumb = document.createElement("img");
+        thumb.src = src;
+        if (idx === currentIndex) thumb.classList.add("active");
+        
+        thumb.onclick = (e) => {
+            e.stopPropagation(); // Aby se nezavřel lightbox
+            currentIndex = idx;
+            openLightbox();
+        };
+        thumbBox.appendChild(thumb);
+    });
+
+    lb.classList.add("open");
+}
+
+function changeSlide(dir) {
+    currentIndex += dir;
+    if (currentIndex < 0) currentIndex = currentPhotos.length - 1;
+    if (currentIndex >= currentPhotos.length) currentIndex = 0;
+    openLightbox(); // Teď už to nespadne, protože album je v currentAlbum
+}
+
+// Ovládání
+document.querySelector(".close").onclick = () => document.getElementById("lightbox").classList.remove("open");
+document.querySelector(".left").onclick = (e) => { e.stopPropagation(); changeSlide(-1); };
+document.querySelector(".right").onclick = (e) => { e.stopPropagation(); changeSlide(1); };
+
+// Kliknutí mimo obrázek zavře lightbox
+document.getElementById("lightbox").onclick = (e) => {
+    if (e.target.id === "lightbox") document.getElementById("lightbox").classList.remove("open");
+};
+
+// Klávesy
+document.addEventListener("keydown", e => {
+    if (!document.getElementById("lightbox").classList.contains("open")) return;
+    if (e.key === "ArrowRight") changeSlide(1);
+    if (e.key === "ArrowLeft") changeSlide(-1);
+    if (e.key === "Escape") document.getElementById("lightbox").classList.remove("open");
+});
+
+// Filtry
+document.getElementById("seasonFilter").onchange = renderGallery;
+document.getElementById("teamFilter").onchange = renderGallery;
+
+// První načtení
+renderGallery();
+</script>
+
+</body>
+</html>

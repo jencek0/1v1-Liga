@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1v1 Liga - Statistiky</title>
+<link rel="shortcut icon" href="images/1v1logo – upraveno.jpg" type="image/x-icon">
+<style>
+
+  html {
+      scrollbar-gutter: stable;
+    }
+
+footer {
+      text-align: center; padding: 25px; background: #0c0c0c; color: #979797; font-size: 0.9rem;
+      border-top: 2px solid #111111;
+    }
+
+/* NAVBAR */
+.topnav{
+  width: 100%;
+  background: rgb(10, 10, 10);
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 4px solid #da57b2;
+  font-size: 20px;
+  padding: 20px 0px;
+  height: 27px;
+}
+
+.topnav a{
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.topnav a:hover{
+  color: #00bfff;
+}
+.topnav a.active{
+  color: #00bfff;
+}
+
+header {
+      background: linear-gradient(180deg, rgb(10, 10, 10), #111);
+      color: white;
+      text-align: center;
+      padding: 30px 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    header h1 { margin: 0; font-size: 2.2rem; }
+    header a { color: #bcd4f5; text-decoration: none; font-weight: 600; display:inline-block; margin-top:10px; }
+
+body{
+  margin:0;
+  font-family: "Segoe UI", sans-serif;
+  background:#111;
+  color:white;
+  text-align: center;
+}
+
+/* MAIN */
+h1{
+  text-align:center;
+  margin-bottom:5px;
+  font-size:2.2em;
+}
+
+h3{
+  text-align:center;
+  margin-bottom:30px;
+  color:#aaa;
+  font-weight:normal;
+}
+
+.container{
+  max-width:1400px;
+  margin:auto;
+  padding:10px;
+}
+
+/* SEKCE */
+.stat-section{
+  margin-bottom:30px;
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:10px;
+  transition: 0.2s;
+}
+
+.stat-section:hover{
+  transform: translateY(-3px);
+}
+
+/* TABULKY */
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th, td{
+  padding:8px;
+  text-align:left;
+}
+
+.td2 {
+  padding-left: 18px;
+}
+
+.td3 {
+  padding-left: 50px;
+}
+
+.td4 {
+  padding-left: 30px;
+}
+
+tr{
+  border-bottom:1px solid #333;
+}
+
+th{
+  border-bottom:2px solid #444;
+  color: #00bfff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Hover na řádky tabulky */
+table tr:hover{
+  background-color: #222;
+}
+
+/* FORMA */
+.form span{
+  display:inline-block;
+  width:22px;
+  text-align:center;
+  margin-right:3px;
+  border-radius:4px;
+  font-weight:bold;
+}
+
+.win{background:green;}
+.loss{background:red;}
+.draw{background:gray;}
+
+/* GRID LAYOUT */
+.stats-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.stat-section.half {
+  grid-column: span 1;
+}
+
+.stat-section.full {
+  grid-column: span 3;
+}
+
+/* RESPONSIVITA */
+@media (max-width: 600px){
+  .stats-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Drobné efekty pro sérii a forma */
+.stat-section p b{
+  color:#00bfff;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="topnav">
+  <a href="index.html">Tabulka</a>
+  <a href="zapasy.html">Zápasy</a>
+  <a href="novinky.html">Novinky</a>
+  <a href="statistiky.html" class="active">Statistiky</a>
+  <a href="fotogalerie.html">Fotogalerie</a>
+</nav>
+<header>
+    <h1>📊 Statistiky ligy</h1>
+  <h3>Aktuální přehled statistik této sezóny.</h3>
+    <a href="index.html">← Zpět na hlavní stránku</a>
+  </header>
+<div class="container">
+  
+
+  <div class="stats-grid">
+
+    <!-- STŘELCI -->
+    <div class="stat-section half">
+      <h2>⚽ Vstřelené góly</h2>
+      <table id="goalsForTable">
+        <thead><tr>
+            <th>Hráč</th>
+            <th>Góly</th>
+          </tr></thead>
+          <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- INKASOVANÉ GÓLY -->
+    <div class="stat-section half">
+      <h2>🥅 Inkasované góly</h2>
+      <table id="goalsAgainstTable">
+        <thead><tr>
+            <th>Tým</th>
+            <th>Obdržené góly</th>
+          </tr></thead>
+          <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- ČISTÁ KONTA -->
+    <div class="stat-section half">
+      <h2>🧤 Čistá konta</h2>
+      <table>
+        <tr><th>Tým</th><th>Čistá konta</th></tr>
+        <tr><td>Sparta</td><td class="td3">0</td></tr>
+        <tr><td>Barcelona</td><td class="td3">0</td></tr>
+        <tr><td>Slovan</td><td class="td3">0</td></tr>
+        <tr><td>Slovácko</td><td class="td3">0</td></tr>
+        <tr><td>Hodonín</td><td class="td3">0</td></tr>
+      </table>
+    </div>
+
+    <!-- FORMA -->
+        <div class="stat-section full">
+          <h2>🔥 Nejrychlejší gól v zápase</h2>
+          <table>
+            <tr><th>Hráč</th><th>Čas</th></tr>
+            <tr><td>Jencek</td><td>12,68 s</td></tr>
+            <tr><td>Ondřej</td><td>31,87 s</td></tr>
+            <tr><td>Kika</td><td>52,34 s</td></tr>
+            <tr><td></td><td></td></tr>
+            <tr><td></td><td></td></tr>
+          </table>
+        </div>
+
+    <!-- EFEKTIVITA -->
+    <div class="stat-section half">
+      <h2>📈 Góly na zápas</h2>
+      <table>
+        <tr><th>Tým</th><th>Góly / zápas</th></tr>
+        <tr><td>Sparta</td><td class="td3">6.0</td></tr>
+        <tr><td>Barcelona</td><td class="td3">5.8</td></tr>
+        <tr><td>Slovan</td><td class="td3">3.7</td></tr>
+        <tr><td>Slovácko</td><td class="td3">2.3</td></tr>
+        <tr><td>Hodonín</td><td class="td3">1.0</td></tr>
+      </table>
+    </div>
+
+    <!-- PPG -->
+    <div class="stat-section half">
+      <h2>📊 Body na zápas (PPG)</h2>
+      <table id="ppgTable">
+        <thead>
+          <tr>
+            <th>Tým</th>
+            <th>PPG</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- ÚSPĚŠNOST -->
+    <div class="stat-section half">
+      <h2>🏆 Úspěšnost výher</h2>
+      <table id="successTable">
+        <thead>
+          <tr>
+            <th>Tým</th>
+            <th>%</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Nejgólovější zápasy -->
+    <div class="stat-section full">
+      <h2>🎯 Nejgólovější zápasy</h2>
+      <table>
+            <tr><th>Zápas</th><th>Výsledek</th></tr>
+            <tr><td>ŠK Slovan Bratislava vs FC Barcelona</td><td class="td4">5:8</td></tr>
+            <tr><td>ŠK Slovan Bratislava vs 1.FC Slovácko</td><td class="td4">5:3</td></tr>
+            <tr><td>1.FC Slovácko vs AC Sparta Praha</td><td class="td4">1:6</td></tr>
+            <tr><td>FC Barcelona vs ŠK Slovan Bratislava</td><td class="td4">6:1</td></tr>
+            <tr><td>FC Barcelona vs 1.FC Slovácko</td><td class="td4">4:3</td></tr>
+          </table>
+    </div>
+
+    
+
+
+ </div>
+</div>
+<footer>&copy; 2025 1v1 Liga Hodonín - Svaz Malého Fotbalu - Všechna práva vyhrazena</footer>
+
+<script src="data.js"></script>
+<script>
+function renderStats() {
+  const ppgBody = document.querySelector("#ppgTable tbody");
+  const successBody = document.querySelector("#successTable tbody");
+
+  const data = teamsData.map(team => {
+    const ppg = team.matchesplayed > 0 
+      ? (team.points / team.matchesplayed) 
+      : 0;
+
+    const success = team.matchesplayed > 0
+      ? ((team.points / (team.matchesplayed * 3)) * 100)
+      : 0;
+
+    return {
+      ...team,
+      ppg: ppg.toFixed(2),
+      success: success.toFixed(0)
+    };
+  });
+
+  // 🔥 seřazení pro PPG
+  const sortedPPG = [...data].sort((a, b) => b.ppg - a.ppg);
+
+  // 🔥 seřazení pro úspěšnost
+  const sortedSuccess = [...data].sort((a, b) => b.success - a.success);
+
+  // vyčisti tabulky
+  ppgBody.innerHTML = "";
+  successBody.innerHTML = "";
+
+  // naplnění PPG
+  sortedPPG.forEach(team => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${team.team}</td>
+      <td>${team.ppg}</td>
+    `;
+    ppgBody.appendChild(tr);
+  });
+
+  // naplnění úspěšnosti
+  sortedSuccess.forEach(team => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${team.team}</td>
+      <td>${team.success} %</td>
+    `;
+    successBody.appendChild(tr);
+  });
+}
+
+renderStats();
+
+// --- VSTŘELENÉ A INKASOVANÉ GÓLY ---
+const goalsForBody = document.querySelector("#goalsForTable tbody");
+const goalsAgainstBody = document.querySelector("#goalsAgainstTable tbody");
+
+// seřazení
+const sortedGoalsFor = [...teamsData].sort((a,b) => b.goalsFor - a.goalsFor);
+const sortedGoalsAgainst = [...teamsData].sort((a,b) => a.goalsAgainst - b.goalsAgainst); // méně = lepší
+
+// vyčisti
+goalsForBody.innerHTML = "";
+goalsAgainstBody.innerHTML = "";
+
+// vstřelené góly
+sortedGoalsFor.forEach(team => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${team.team}</td>
+    <td>${team.goalsFor}</td>
+  `;
+  goalsForBody.appendChild(tr);
+});
+
+// inkasované góly
+sortedGoalsAgainst.forEach(team => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${team.team}</td>
+    <td>${team.goalsAgainst}</td>
+  `;
+  goalsAgainstBody.appendChild(tr);
+});
+</script>
+</body>
+</html>
