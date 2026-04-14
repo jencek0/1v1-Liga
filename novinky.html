@@ -6,6 +6,13 @@
   <title>1v1 Liga - Novinky</title>
   <link rel="shortcut icon" href="images/1v1logo – upraveno.jpg" type="image/x-icon">
   <style>
+    html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 
     html {
       scrollbar-gutter: stable;
@@ -109,10 +116,97 @@
       border-top: 2px solid #d6dde4;
     }
 
-    @media (max-width:700px){
-      main{ margin:20px; }
-      .news-entry{ padding:15px; }
-    }
+    /* ================= NOVÁ KOMPLETNÍ RESPONZIVITA PRO NOVINKY ================= */
+
+/* Globální fix proti přetékání */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 850px) {
+  /* Navigace */
+  .topnav {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    gap: 10px;
+  }
+
+  .topnav a {
+    font-size: 16px;
+    padding: 5px 10px;
+  }
+
+  /* Kontejner novinek */
+  .container {
+    width: 95%;
+    margin: 15px auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  h1 { font-size: 26px; }
+
+  /* Karta novinky - úprava na mobil */
+  .news-card {
+    flex-direction: column; /* Obrázek a text pod sebou */
+    padding: 15px;
+  }
+
+  /* Obrázek v novince */
+  .news-image {
+    width: 100%; /* Roztažení na celou šířku */
+    height: 200px;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+
+  .news-content {
+    width: 100%;
+  }
+
+  .news-title {
+    font-size: 1.2rem;
+  }
+
+  /* Modální okno (detail novinky) */
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+    padding: 20px;
+  }
+
+  #modalImage {
+    max-height: 250px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 20px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 98%;
+  }
+
+  .news-card {
+    padding: 10px;
+  }
+
+  .news-image {
+    height: 180px;
+  }
+
+  .news-title {
+    font-size: 1.1rem;
+  }
+}
 
     /* ===== UDRŽÍ FOOTER DOLE ===== */
 html, body {
