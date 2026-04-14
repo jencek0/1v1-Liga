@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>1v1 Liga – Zápasy</title>
-  <link rel="shortcut icon" href="images/1v1logo – upraveno.jpg" type="image/x-icon">
+  <link rel="shortcut icon" href="images/1v1logo – upraveno.jpg" type="image/x-icon" alt="foto">
   <style>
+
+    html {
+      scrollbar-gutter: stable;
+    }
+
+    .topnav{
+    width: 100%;
+    background:linear-gradient(180deg,#000b1b,#081426);
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 4px solid #da57b2;
+    font-size: 20px;
+    padding: 20px 0px;
+    }
+
+    .topnav a{
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .topnav a:hover{
+      color: #00bfff;
+    }
+    .topnav a.active{
+      color: #00bfff;
+    }
+
     body{
       margin:0;
       font-family:"Segoe UI", sans-serif;
@@ -162,76 +195,7 @@
 .x{border: #0814265e solid;}
 
 
-/*STATISTIKY SEZONY*/
-.records-board{
-  background: rgba(255,255,255,.05);
-  padding:20px;
-  border-radius:18px;
-}
 
-.record{
-  display:grid;
-  grid-template-columns: 1fr auto auto;
-  align-items:center;
-  padding:10px 6px;
-  border-bottom:1px solid rgba(255,255,255,.1);
-  font-size:17px;
-}
-
-.record:last-child{
-  border-bottom:none;
-}
-
-.label{
-  opacity:.8;
-}
-
-.value{
-  font-weight:700;
-  margin-right:20px;
-}
-
-.number{
-  font-size:22px;
-  font-weight:800;
-  color:#4da3ff;
-}
-
-.stats-wrapper.collapsed .record:nth-child(n+5){
-  display:none;
-}
-.record{
-  transition: all 0.3s ease;
-}
-#toggleStats{
-  display:block;
-  margin:20px auto 0;
-  padding:10px 22px;
-
-  border:none;
-  border-radius:12px;
-
-  background:linear-gradient(135deg,#4da3ff,#1e6bd6);
-  color:#000000;
-
-  font-weight:700;
-  font-size:15px;
-  cursor:pointer;
-
-  box-shadow:0 6px 18px rgba(77,163,255,.35);
-  transition:all .25s ease;
-}
-
-/* hover efekt */
-#toggleStats:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(77,163,255,.5);
-}
-
-/* klik efekt */
-#toggleStats:active{
-  transform:scale(.96);
-}
 
 /*HEAD2HEAD*/
 .h2h-section{
@@ -255,6 +219,15 @@
   border:none;
   font-size:16px;
   background-color: rgb(138, 159, 255);
+  outline: none;
+  appearance: none;        /* 🔥 odstraní default styl */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 35px;
+
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 }
 
 .vs{
@@ -333,7 +306,15 @@
 }
 
 .report-card:hover{transform:translateY(-6px);}
-.score{font-size:22px;font-weight:700;margin:6px 0;}
+.score {
+  font-size:22px;
+  font-weight:700;
+  margin:6px 0;}
+.date {
+  font-size: 15px;
+  font-weight: 700;
+  color: #65768f;
+}
 
     /* === MODAL === */
     .report-modal{
@@ -369,21 +350,74 @@
 
     footer{text-align:center;padding:30px;background:#081426;opacity:.7;margin-top:60px;}
 
-    @media(max-width:900px){
-      .report-grid{grid-template-columns:repeat(2,1fr);}    
-      /* hráč kola ZŮSTÁVÁ vedle textu i na menších šířkách */
-      .player-week{grid-template-columns:220px 1fr;}
-    }    
-      .player-week{grid-template-columns:1fr;}
-      .timeline-horizontal{gap:20px;} /* na mobilu menší rozestupy */
-    
-      .player-week{grid-template-columns:1fr;}
-    
-    @media(max-width:600px){
-      .report-grid{grid-template-columns:1fr;}
-      /* až na úplně malém mobilu se může dát obrázek nahoru */
-      .player-week{grid-template-columns:1fr;}
-    }
+    /* === RESPONZIVITA PRO TABLETY A MOBILY === */
+/* === RESPONZIVITA FIX === */
+@media (max-width:1200px){
+  .container {
+    padding: 0 15px;
+    width: auto;  /* zajistí, že kontejner je 100% */
+  }
+  .timeline-horizontal {
+    padding: 20px 0 40px;
+    overflow-x: auto; /* scroll, pokud se nevejde horizontálně */
+  }
+  .timeline-horizontal .event {
+    flex: 0 0 auto;  /* body se neroztahují, scroll lze */
+  }
+}
+
+@media (max-width:900px){
+  .report-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .player-week {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .timeline-horizontal {
+    flex-wrap: nowrap; /* scroll místo zalomení */
+    gap: 16px;
+  }
+  .player-week img {
+    max-width: 100%;
+    height: auto;
+  }
+
+}
+
+@media (max-width:600px){
+  .report-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .player-week {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .timeline-horizontal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .timeline-horizontal .event {
+    width: 100%;  /* každé event zabere celou šířku */
+    margin-bottom: 20px;
+  }
+
+  .form-table th,
+  .form-table td {
+    padding: 6px;
+    font-size: 14px;
+  }
+  .h2h-box {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .vs {
+    display: block;
+    margin: 6px 0;
+  }
+}
     
 
 /* SCROLL BAR*/
@@ -407,6 +441,14 @@
   </style>
 </head>
 <body>
+<!--Navigace-->
+  <nav class="topnav">
+  <a href="index.html" >Tabulka</a>
+  <a href="zapasy.html"class="active">Zápasy</a>
+  <a href="novinky.html">Novinky</a>
+  <a href="statistiky.html">Statistiky</a>
+  <a href="fotogalerie.html">Fotogalerie</a>
+</nav>
 
 <header>
   <h1>⚽ Zápasy 1v1 ligy</h1>
@@ -439,8 +481,8 @@
       <div class="event"><h4>Matchday 1</h4><span>18. 10. 2025</span></div>
       <div class="event repre pause"><h4>Repre Pauza</h4><span>15. 11. 2025</span></div>
       <div class="event pause"><h4>Zimní Pauza</h4><span>17. 11. 2025 - 28. 2. 2026</span></div>
-      <div class="event"><h4>Matchday 2</h4><span>Datum bude upřesněno</span></div>
-      <div class="event"><h4>Matchday 2</h4><span>Datum bude upřesněno</span></div>
+      <div class="event"><h4>Matchday 2</h4><span>12. 4. 2026</span></div>
+      <div class="event"><h4>Matchday 3</h4><span>Datum bude upřesněno</span></div>
       <div class="event end"><h4>Konec sezóny</h4><span>Datum bude upřesněno</span></div>
     </div>
   </section>
@@ -461,16 +503,16 @@
         <td>FC Barcelona</td>
         <td class="win">V</td>
         <td class="win">V</td>
-        <td class="x">X</td>
-        <td class="x">X</td>
+        <td class="win">V</td>
+        <td class="win">V</td>
         <td class="x">X</td>
       </tr>
 
       <tr>
         <td>ŠK Slovan Bratislava</td>
         <td class="loss">P</td>
-        <td class="x">X</td>
-        <td class="x">X</td>
+        <td class="win">V</td>
+        <td class="loss">P</td>
         <td class="x">X</td>
         <td class="x">X</td>
       </tr>
@@ -496,8 +538,8 @@
       <tr>
         <td>1.FC Slovácko</td>
         <td class="loss">P</td>
-        <td class="x">X</td>
-        <td class="x">X</td>
+        <td class="loss">P</td>
+        <td class="loss">P</td>
         <td class="x">X</td>
         <td class="x">X</td>
       </tr>
@@ -507,52 +549,6 @@
 
 
 
-  <!--STATISTIKY SEZONY-->
-<section class="records-board">
-  <div class="stats-wrapper collapsed" id="statsWrapper">
- 
-    <h2>📊 Statistiky sezóny</h2>
-
-  <div class="record">
-    <span class="label">Nejvíce vstřelených gólů</span>
-    <span class="value">FC Barcelona</span>
-    <span class="number">11</span>
-  </div>
-  <div class="record">
-      <span class="label">Nejvíce gólů v jednom zápase</span>
-      <span class="value">FCB 6:1 ŠKS; FCS 1:6 ACS</span>
-      <span class="number">7</span>
-    </div>
-  <div class="record">
-    <span class="label">Nejméňe obdržených gólů</span>
-    <span class="value">AC Sparta Praha</span>
-    <span class="number">1</span>
-  </div>
-  <div class="record">
-      <span class="label">Nejvíce inkasovaných gólů</span>
-      <span class="value">ŠK Slovan Bratislava; 1.FC Slovácko</span>
-      <span class="number">6</span>
-    </div>
-  <div class="record">
-    <span class="label">Nejvíce čistých kont</span>
-    <span class="value">X</span>
-    <span class="number">0</span>
-  </div>
-  <div class="record">
-    <span class="label">Nejdelší série výher</span>
-    <span class="value">FC Barcelona</span>
-    <span class="number">2</span>
-  </div>
-  <div class="record">
-    <span class="label">Nejrychlejší gól</span>
-    <span class="value">X</span>
-    <span class="number">X</span>
-  </div>
-</div>
-<button id="toggleStats">Zobrazit více</button>
-</section>
-
-
 <!--HEAD2HEAD-->
 <section class="h2h-section">
   <h2>⚔️ Head to Head</h2>
@@ -560,22 +556,22 @@
   <div class="h2h-box">
     <select id="h2hA">
       <option value="">Vyber tým</option>
-      <option>FC Barcelona</option>
-      <option>ŠK Slovan Bratislava</option>
-      <option>FK Hodonín</option>
-      <option>AC Sparta Praha</option>
-      <option>1.FC Slovácko</option>
+      <option value="FC Barcelona">FC Barcelona</option>
+      <option value="ŠK Slovan Bratislava">ŠK Slovan Bratislava</option>
+      <option value="FK Hodonín">FK Hodonín</option>
+      <option value="AC Sparta Praha">AC Sparta Praha</option>
+      <option value="1.FC Slovácko">1.FC Slovácko</option>
     </select>
 
     <span class="vs">VS</span>
 
     <select id="h2hB">
       <option value="">Vyber tým</option>
-      <option>FC Barcelona</option>
-      <option>ŠK Slovan Bratislava</option>
-      <option>FK Hodonín</option>
-      <option>AC Sparta Praha</option>
-      <option>1.FC Slovácko</option>
+      <option value="FC Barcelona">FC Barcelona</option>
+      <option value="ŠK Slovan Bratislava">ŠK Slovan Bratislava</option>
+      <option value="FK Hodonín">FK Hodonín</option>
+      <option value="AC Sparta Praha">AC Sparta Praha</option>
+      <option value="1.FC Slovácko">1.FC Slovácko</option>
     </select>
   </div>
 
@@ -598,20 +594,52 @@
       <div class="report-grid">
         <!--SEM PŘIDÁVAT REPORT KARTY-->
 
+
+        <div class="report-card" data-title="ŠK Slovan Bratislava vs FC Barcelona" data-score="5 : 8" data-text="V předehrávce 7. kola si Barcelona šla pro 3 body už od začátku. Slovan jí to ale rozhodně neusnadňoval. Barcelona si většinu gólů vytvořila sólovými akcemi, na které Slovan často odpověděl gólem z dálky. O poločase vedla Barcelona 7:4 a po jednom gólu na každé straně si tří gólový rozdíl dokázala udržet až do konce, když zvítězila 8:5."
+        data-img="images/sezona25-26/ssk-fcb-8.png">
+          <strong>ŠK Slovan Bratislava vs FC Barcelona</strong>
+          <div class="score">5 : 8</div>
+          <div class="date">12.04.2026</div>
+        </div>
+
+
+        <div class="report-card" data-title="FC Barcelona vs 1.FC Slovácko" data-score="4 : 3" data-text="Předehrávka 4. kola mezi týmy FC Barcelona a 1.FC Slovácko se nesla hlavně v duchu chyb Barcelony. V prvním poločase dalo Slovácko 2 góly do prázdné brány, a Barcelona tak muselo dotahovat. To se jí povedlo a tak byl stav v poločase 2:2. Ve druhém poločase se Slovácko pokoušelo míč do branky dostat lobem, a to se mu také povedlo poté co Barcelona špatně odhadla trajektorii a míč si do branky doklepla. Po vlastním gólu to vypadalo, že si Slovácko možná odnese první výhru proti Barceloně, to se ale změnilo když dostalo vyrovnávací gól. Body se nakonec ale ani nedělily. Barcelona totiž v nastaveném čase dokázala skórovat a dramatický zápas tak ukončila vítězně 4:3."
+        data-img="images/sezona25-26/fcb-fcs-8.png">
+          <strong>FC Barcelona vs 1.FC Slovácko</strong>
+          <div class="score">4 : 3</div>
+          <div class="date">12.04.2026</div>
+        </div>
+
+
+        <div class="report-card" data-title="ŠK Slovan Bratislava vs 1.FC Slovácko" data-score="5 : 3" data-text="V prvním zápase jarní části ligy čekal Slovan velmi těžký soupeř, a to 1.FC Slovácko. To sice mělo po prohraném zápase se Spartou nula bodů, ale jak jsme viděli minulou sezónu, rozhodně mělo kvalitu Slovan porazit. Už od začátku se ale na Slovácku ukazovala dlouhá pauza a Slovan šel po chvilce do dvou gólového vedení. Slovácko se pokusilo průběh zvrátit, když po dvou pěkných akcích srovnalo, ale Slovan si i díky vlastnímu gólu dokázal znovu vybudovat rozdíl, který vydržel až do poločasu, kdy byl stav 4:2. Po pauze se Slovácko opět snažilo dotáhnout a snížilo na 4:3, ale Slovan si výhru zajistil gólem v závěru a bral tak 3 body, které ho posunuli na 3. místo v tabulce."
+        data-img="images/sezona25-26/ssk-fcs-8.png">
+          <strong>ŠK Slovan Bratislava vs 1.FC Slovácko</strong>
+          <div class="score">5 : 3</div>
+          <div class="date">12.04.2026</div>
+        </div>
+
+
         <div class="report-card" data-title="FK Hodonín vs FC Barcelona" data-score="1 : 5" data-text="Na nováčka ligy FK Hodonín čekal již v jeho prvním zápase Vítěž minulého ročníku ligy FC Barcelona. Hodonín sice předvedl sympatický výkon a zápas byl v celku vyrovnaný ale výsledek mluví jasně ve prospěch Barcelony 5:1."
-        data-img="images/hodonin-barca.jpg">
+        data-img="images/sezona25-26/fkh-fcb-1.jpg">
           <strong>FK Hodonín vs FC Barcelona</strong>
           <div class="score">1 : 5</div>
+          <div class="date">18.10.2025</div>
         </div>
+
+
         <div class="report-card" data-title="FC Barcelona vs ŠK Slovan Bratislava" data-score="6 : 1" data-text="Za stejného výsledku jako zahajovací utkání sezóny, tedy 6:1, skončil i druhý zápas ve kterém Barcelona porazila Slovan s jistotou. Slovan se pokusil Barcelonu potrápit hlavně dlouhými střelami kterým ale scházela přesnost a trocha štěstí."
-        data-img="images/barca-slovan.jpg">
+        data-img="images/sezona25-26/fcb-ssk-1.jpg">
           <strong>FC Barcelona vs ŠK Slovan Bratislava</strong>
           <div class="score">6 : 1</div>
+          <div class="date">18.10.2025</div>
         </div>
-        <div class="report-card" data-title="1. FC Slovácko vs AC Sparta Praha" data-score="1 : 6" data-text="První zápas sezóny 2025/26 se odehrál mezi týmy 1. FC Slovácko a AC Sparta Praha. Sparta už od začátku dominovala a Slovácku se nedařilo tlak bránit. I přes branku kterou Slovácko vstřelilo byl zápas rozhodnutý již v půli. Konečný výsledek 1:6 celkem dobře shrnuje celé utkání."
-        data-img="images/slovacko-sparta.jpg">
-          <strong>1. FC Slovácko vs AC Sparta Praha</strong>
+
+
+        <div class="report-card" data-title="1.FC Slovácko vs AC Sparta Praha" data-score="1 : 6" data-text="První zápas sezóny 2025/26 se odehrál mezi týmy 1.FC Slovácko a AC Sparta Praha. Sparta už od začátku dominovala a Slovácku se nedařilo tlak bránit. I přes branku kterou Slovácko vstřelilo byl zápas rozhodnutý již v půli. Konečný výsledek 1:6 celkem dobře shrnuje celé utkání."
+        data-img="images/sezona25-26/fcs-acs-1.jpg">
+          <strong>1.FC Slovácko vs AC Sparta Praha</strong>
           <div class="score">1 : 6</div>
+          <div class="date">18.10.2025</div>
         </div>
         
       </div>
@@ -637,15 +665,11 @@
 const btn = document.getElementById("toggleStats");
 const wrapper = document.getElementById("statsWrapper");
 
-btn.addEventListener("click", () => {
-  wrapper.classList.toggle("collapsed");
-
-  if(wrapper.classList.contains("collapsed")){
-    btn.textContent = "Zobrazit více";
-  } else {
-    btn.textContent = "Zobrazit méně";
-  }
-});
+if(btn && wrapper){
+  btn.addEventListener("click", () => {
+    wrapper.classList.toggle("collapsed");
+  });
+}
 
 
   /*Reporty*/
@@ -678,15 +702,15 @@ btn.addEventListener("click", () => {
 
 /*Head2Head*/
 const h2hData = {
-  "FC Barcelona|ŠK Slovan Bratislava": "1 výhra - 0 proher",
+  "FC Barcelona|ŠK Slovan Bratislava": "2 výhry - 0 proher",
   "FC Barcelona|FK Hodonín": "1 výhra - 0 proher",
   "FC Barcelona|AC Sparta Praha": "0 výher - 0 proher",
-  "FC Barcelona|1.FC Slovácko": "0 výher - 0 proher",
+  "FC Barcelona|1.FC Slovácko": "1 výhra - 0 proher",
 
   "ŠK Slovan Bratislava|FK Hodonín": "0 výher - 0 proher",
   "ŠK Slovan Bratislava|AC Sparta Praha": "0 výher - 0 proher",
-  "ŠK Slovan Bratislava|1.FC Slovácko": "0 výher - 0 proher",
-  "ŠK Slovan Bratislava|FC Barcelona": "0 výher - 1 prohra",
+  "ŠK Slovan Bratislava|1.FC Slovácko": "1 výhra - 0 proher",
+  "ŠK Slovan Bratislava|FC Barcelona": "0 výher - 2 prohry",
 
   "FK Hodonín|AC Sparta Praha": "0 výher - 0 proher",
   "FK Hodonín|1.FC Slovácko": "0 výher - 0 proher",
@@ -700,10 +724,14 @@ const h2hData = {
 
   "1.FC Slovácko|FK Hodonín": "0 výher - 0 proher",
   "1.FC Slovácko|AC Sparta Praha": "0 výher - 1 prohra",
-  "1.FC Slovácko|ŠK Slovan Bratislava": "0 výher - 0 proher",
-  "1.FC Slovácko|FC Barcelona": "0 výher - 0 proher",
+  "1.FC Slovácko|ŠK Slovan Bratislava": "0 výher - 1 prohra",
+  "1.FC Slovácko|FC Barcelona": "0 výher - 1 prohra",
 
 };
+
+function normalize(str){
+  return str.trim().toLowerCase();
+}
 
 function showH2H(){
   const a = document.getElementById("h2hA").value;
@@ -720,11 +748,12 @@ function showH2H(){
     return;
   }
 
-  const key1 = `${a}|${b}`;
-  const key2 = `${b}|${a}`;
+  const key = `${a}|${b}`;
+  const reverseKey = `${b}|${a}`;
 
-  result.textContent =
-    h2hData[key1] || h2hData[key2] || "Zatím bez záznamu";
+  const value = h2hData[key] ?? h2hData[reverseKey];
+
+  result.textContent = value || "Zatím bez záznamu";
 }
   
 
