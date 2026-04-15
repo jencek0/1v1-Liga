@@ -356,101 +356,119 @@
 
     footer{text-align:center;padding:30px;background:#081426;opacity:.7;margin-top:60px;}
 
-/* ================= KOMPLETNÍ NOVÁ RESPONZIVITA PRO ZÁPASY ================= */
+/* ================= NOVÁ MODERNI RESPONZIVITA ================= */
 
-/* Globální fix přetékání pro celou stránku */
+/* Globální opravy */
 html, body {
   overflow-x: hidden;
   width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
-@media (max-width: 850px) {
-  /* Navigace - naskládání pod sebe */
+* {
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .report-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  header h1 { font-size: 32px; }
+  
+  /* Navigace - lépe rozložená pro prsty */
   .topnav {
-    height: auto;
     flex-wrap: wrap;
-    padding: 10px 0;
+    gap: 15px;
+    padding: 15px 10px;
+  }
+  
+  .topnav a { font-size: 17px; }
+
+  /* Player of the week - pod sebe */
+  .player-week {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .player-week img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Timeline - přepnutí na svislou osu pro čitelnost */
+  .timeline-horizontal {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 40px;
+    gap: 30px;
+  }
+
+  .timeline-horizontal::before {
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    height: 100%;
+  }
+
+  .event {
+    text-align: left;
+    width: 100%;
+  }
+
+  .event::before {
+    left: -20px;
+    top: 5px;
+    transform: translateX(-50%);
+  }
+
+  .event h4 { margin: 0 0 5px; }
+
+  /* Reporty na jeden sloupec */
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .reports-scroll {
+    max-height: none; /* Na mobilu raději plynulý scroll stránky */
+  }
+
+  /* H2H Box */
+  .h2h-box {
+    flex-direction: column;
     gap: 10px;
   }
-
-  .topnav a {
-    font-size: 16px;
-    padding: 5px 10px;
-  }
-
-  /* Hlavní kontejner */
-  .container {
-    width: 95%;
-    margin: 15px auto;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  h1 { font-size: 26px; }
-
-  /* Filtry - tlačítka pod sebou */
-  .filter-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  .filter-btn {
+  
+  .h2h-box select {
     width: 100%;
-    padding: 10px 5px;
-    font-size: 14px;
-  }
-
-  /* TABULKA - Klíčová úprava pro mobil */
-  table {
-    display: block;
-    width: 100%;
-    overflow-x: auto; /* Kdyby byla tabulka přesto moc široká */
-  }
-
-  /* Skryjeme méně důležité sloupce (Datum a Soutěž), aby zbyl čas a skóre */
-  th:nth-child(1), td:nth-child(1),
-  th:nth-child(2), td:nth-child(2) {
-    display: none;
-  }
-
-  th, td {
-    padding: 8px 4px;
-    font-size: 14px;
-  }
-
-  /* Skóre zvýrazníme */
-  .score {
-    font-size: 16px;
-    padding: 4px 8px;
-    min-width: 50px;
-  }
-
-  /* Footer */
-  footer {
-    padding: 20px;
-    font-size: 13px;
   }
 }
 
 @media (max-width: 480px) {
-  /* Na úplně malých mobilech zmenšíme mezery */
-  .container {
-    width: 98%;
-  }
+  header h1 { font-size: 26px; }
   
-  .filter-buttons {
-    grid-template-columns: 1fr; /* Tlačítka filtrů pod sebou */
+  /* Tabulka formy - zmenšení textu a skrytí méně důležitých kol */
+  .form-table th, .form-table td {
+    padding: 8px 4px;
+    font-size: 13px;
   }
 
-  /* Upravíme zobrazení týmů, aby se text nelámal ošklivě */
-  td:nth-child(3), td:nth-child(5) {
-    max-width: 80px;
+  /* Pokud má tým dlouhý název, zkrátíme ho */
+  .form-table td:first-child {
+    max-width: 100px;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+  }
+
+  /* Modal detailu - roztažení na celou šířku */
+  .report-detail {
+    width: 95%;
+    padding: 15px;
+    margin: 10px;
   }
 }
     
