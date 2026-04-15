@@ -1427,7 +1427,22 @@ function renderSeason(id) {
 
 })();
 
+document.addEventListener('click', (e) => {
+  const isClickInside = legendPanel.contains(e.target);
+  const isClickOnCard = e.target.closest('.hof-card');
 
+  if (!isClickInside && !isClickOnCard && legendPanel.classList.contains('open')) {
+    legendPanel.classList.remove('open');
+    legendPanel.setAttribute('aria-hidden', 'true');
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === "Escape" && legendPanel.classList.contains('open')) {
+    legendPanel.classList.remove('open');
+    legendPanel.setAttribute('aria-hidden', 'true');
+  }
+});
   </script>
   
 
